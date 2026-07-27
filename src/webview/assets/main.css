@@ -132,6 +132,25 @@ html.hide-scrollbar::-webkit-scrollbar {
   opacity: 0.7;
 }
 
+/* Labels.
+
+   Drawn the way VS Code draws tags in the extensions list, as a quiet outlined
+   chip rather than a filled pill. The border is mixed out of the foreground
+   colour so it sits at the same distance from the background on a black theme
+   and a white one, without needing a rule for each. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0 0.4em;
+  border: 1px solid color-mix(in srgb, var(--vscode-foreground, #cccccc) 26%, transparent);
+  border-radius: 2px;
+  color: var(--vscode-descriptionForeground, rgba(204, 204, 204, 0.7));
+  background: transparent;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
 /* Priority badges.
 
    These have to stay coloured, because red for critical only carries meaning

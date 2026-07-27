@@ -431,11 +431,7 @@ function LabelEditor({
       {labels.map((label) => (
         <span
           key={label}
-          className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded"
-          style={{
-            background: 'var(--vscode-badge-background)',
-            color: 'var(--vscode-badge-foreground)'
-          }}
+          className="tag text-[10px]"
         >
           {label}
           <button

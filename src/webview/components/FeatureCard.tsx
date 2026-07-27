@@ -143,7 +143,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
             {feature.labels.slice(0, 3).map((label) => (
               <span
                 key={label}
-                className="text-xs px-1.5 py-0.5 rounded bg-badge text-badge-fg"
+                className="tag text-xs"
               >
                 {label}
               </span>
