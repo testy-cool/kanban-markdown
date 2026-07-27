@@ -1,12 +1,15 @@
 # Plain Kanban
 
-A lightweight kanban board for VS Code where every task is a plain markdown
-file in your git repo. Use it to hand work to Claude Code, Codex or Copilot and
-keep track of what is where.
+You tell Claude Code to do five things, and by tomorrow you have no idea which
+ones it did.
 
-Drag cards between columns, set labels and priorities, search across
-everything. It all lives in markdown with YAML frontmatter that you can commit,
-diff and review. No accounts, no service, just files.
+Plain Kanban is a to-do board that lives inside your project. Every card is a
+normal text file in your repo, so your coding agent can read the board, work
+through it, and write back what it finished. You see it all as columns you drag
+cards between.
+
+Nothing to sign up for. Nothing running in the background. Just files you
+already keep in git.
 
 Every colour, size, corner and shadow on the board comes from the VS Code theme
 you are running, so it looks like part of the editor rather than a web page
