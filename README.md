@@ -3,24 +3,9 @@
 A kanban board for VS Code, where every card is a markdown file with YAML
 frontmatter in your own repo. No accounts and no external services.
 
-## Where this came from
-
-This is a fork of
-[LachyFS/kanban-markdown-vscode-extension](https://github.com/LachyFS/kanban-markdown-vscode-extension),
-taken at version 1.14.1 and MIT licensed. The original work is his and the
-`LICENSE` file is unchanged. This fork is maintained separately and does not
-merge from upstream.
-
-Two things are being changed here. The board now takes its colours from the
-running VS Code theme instead of a fixed set of greys, and the card editor loads
-only when you open a card instead of on every board load. See
-`docs/superpowers/specs/` for the reasoning and the measurements.
-
-The extension is `testycool.kanbanmd`, so its settings and commands are all
-prefixed `kanbanmd.` and it can be installed alongside the original without
-either one breaking.
-
-All artwork here is our own. See Installation below.
+Every colour, size, corner and shadow on the board comes from the VS Code theme
+you are running, so it looks like part of the editor rather than a web page
+embedded in it. Hover highlights are instant, like the rest of the interface.
 
 ## Features
 
@@ -158,6 +143,15 @@ Search "Kanban Markdown Native" in the Extensions view, or install
 2. In VS Code, open Extensions, then the `...` menu, then Install from VSIX.
 3. Select the file you downloaded.
 
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+The codebase started from
+[LachyFS/kanban-markdown-vscode-extension](https://github.com/LachyFS/kanban-markdown-vscode-extension)
+at version 1.14.1, which is MIT licensed, and has been developed separately
+since. All artwork is our own.
+
 ## Development
 
 ### Prerequisites
@@ -218,11 +212,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## Contributors
 
+Work by these people is part of this codebase, contributed to it before the
+split.
+
+- [@LachyFS](https://github.com/LachyFS) — the original extension
 - [@luciopaiva](https://github.com/luciopaiva) — sidebar view and layout improvements
 - [@ungive](https://github.com/ungive) — file organization and status subfolders
 - [@hodanli](https://github.com/hodanli) — label management enhancements
 - [@SuperbDotHub](https://github.com/SuperbDotHub) — compact mode and card display options
-
-## License
-
-[MIT](LICENSE)
