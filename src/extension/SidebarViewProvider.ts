@@ -14,7 +14,7 @@ interface SidebarFeature {
 }
 
 export class SidebarViewProvider implements vscode.WebviewViewProvider {
-  public static readonly viewType = 'kanban-markdown.boardView'
+  public static readonly viewType = 'kanbanmd.boardView'
 
   private _view?: vscode.WebviewView
   private _features: SidebarFeature[] = []
@@ -26,8 +26,8 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
     this._setupFileWatcher()
 
     vscode.workspace.onDidChangeConfiguration(e => {
-      if (e.affectsConfiguration('kanban-markdown')) {
-        if (e.affectsConfiguration('kanban-markdown.featuresDirectory')) {
+      if (e.affectsConfiguration('kanbanmd')) {
+        if (e.affectsConfiguration('kanbanmd.featuresDirectory')) {
           this._setupFileWatcher()
         }
         this._refresh()
@@ -52,17 +52,17 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
           this._refresh()
           break
         case 'openBoard':
-          vscode.commands.executeCommand('kanban-markdown.open')
+          vscode.commands.executeCommand('kanbanmd.open')
           break
         case 'newFeature':
-          vscode.commands.executeCommand('kanban-markdown.open')
+          vscode.commands.executeCommand('kanbanmd.open')
           // Wait for the panel to be ready, then trigger create dialog
           setTimeout(() => {
             KanbanPanel.currentPanel?.triggerCreateDialog()
           }, 500)
           break
         case 'openFeature':
-          vscode.commands.executeCommand('kanban-markdown.open')
+          vscode.commands.executeCommand('kanbanmd.open')
           setTimeout(() => {
             KanbanPanel.currentPanel?.openFeature(message.featureId)
           }, 500)
@@ -72,7 +72,7 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
 
     webviewView.onDidChangeVisibility(() => {
       if (webviewView.visible) {
-        vscode.commands.executeCommand('kanban-markdown.open')
+        vscode.commands.executeCommand('kanbanmd.open')
       }
     }, null, this._disposables)
 
@@ -81,7 +81,7 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
     })
 
     // Auto-open the board when the sidebar first loads
-    vscode.commands.executeCommand('kanban-markdown.open')
+    vscode.commands.executeCommand('kanbanmd.open')
 
     webviewView.webview.html = this._getHtml()
   }
@@ -143,13 +143,13 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
   private _getFeaturesDir(): string | null {
     const workspaceFolders = vscode.workspace.workspaceFolders
     if (!workspaceFolders || workspaceFolders.length === 0) return null
-    const config = vscode.workspace.getConfiguration('kanban-markdown')
+    const config = vscode.workspace.getConfiguration('kanbanmd')
     const dir = config.get<string>('featuresDirectory') || '.devtool/features'
     return path.join(workspaceFolders[0].uri.fsPath, dir)
   }
 
   private _getColumns(): KanbanColumn[] {
-    const config = vscode.workspace.getConfiguration('kanban-markdown')
+    const config = vscode.workspace.getConfiguration('kanbanmd')
     const defaultColumns: KanbanColumn[] = [
       { id: 'backlog', name: 'Backlog', color: '#6b7280' },
       { id: 'todo', name: 'To Do', color: '#3b82f6' },

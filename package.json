@@ -1,19 +1,19 @@
 {
-  "name": "kanban-markdown",
+  "name": "kanbanmd",
   "displayName": "Kanban Markdown",
   "description": "A kanban board for your codebase. Features stored as markdown.",
   "version": "1.14.1",
   "packageManager": "pnpm@9.15.9",
-  "publisher": "LachyFS",
+  "publisher": "testycool",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LachyFS/kanban-markdown-vscode-extension"
+    "url": "https://github.com/testy-cool/kanbanmd"
   },
   "bugs": {
-    "url": "https://github.com/LachyFS/kanban-markdown-vscode-extension/issues"
+    "url": "https://github.com/testy-cool/kanbanmd/issues"
   },
-  "homepage": "https://github.com/LachyFS/kanban-markdown-vscode-extension#readme",
+  "homepage": "https://github.com/testy-cool/kanbanmd#readme",
   "icon": "resources/icon.png",
   "galleryBanner": {
     "color": "#1e1e1e",
@@ -34,8 +34,8 @@
     "board"
   ],
   "activationEvents": [
-    "onWebviewPanel:kanban-markdown.panel",
-    "onView:kanban-markdown.boardView"
+    "onWebviewPanel:kanbanmd.panel",
+    "onView:kanbanmd.boardView"
   ],
   "main": "./dist/extension.js",
   "l10n": "./l10n",
@@ -43,16 +43,16 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "kanban-markdown",
+          "id": "kanbanmd",
           "title": "%viewContainer.title%",
           "icon": "resources/kanban.svg"
         }
       ]
     },
     "views": {
-      "kanban-markdown": [
+      "kanbanmd": [
         {
-          "id": "kanban-markdown.boardView",
+          "id": "kanbanmd.boardView",
           "name": "%view.board.name%",
           "type": "webview"
         }
@@ -60,7 +60,7 @@
     },
     "commands": [
       {
-        "command": "kanban-markdown.open",
+        "command": "kanbanmd.open",
         "title": "%command.open.title%",
         "category": "%command.category%",
         "icon": {
@@ -69,7 +69,7 @@
         }
       },
       {
-        "command": "kanban-markdown.addFeature",
+        "command": "kanbanmd.addFeature",
         "title": "%command.addFeature.title%",
         "category": "%command.category%"
       }
@@ -77,7 +77,7 @@
     "configuration": {
       "title": "%config.title%",
       "properties": {
-        "kanban-markdown.language": {
+        "kanbanmd.language": {
           "type": "string",
           "default": "auto",
           "enum": [
@@ -94,12 +94,12 @@
           ],
           "description": "%config.language.description%"
         },
-        "kanban-markdown.featuresDirectory": {
+        "kanbanmd.featuresDirectory": {
           "type": "string",
           "default": ".devtool/features",
           "description": "%config.featuresDirectory.description%"
         },
-        "kanban-markdown.filenamePattern": {
+        "kanbanmd.filenamePattern": {
           "type": "string",
           "default": "name-date",
           "enum": [
@@ -116,7 +116,7 @@
           ],
           "description": "%config.filenamePattern.description%"
         },
-        "kanban-markdown.defaultPriority": {
+        "kanbanmd.defaultPriority": {
           "type": "string",
           "default": "medium",
           "enum": [
@@ -133,7 +133,7 @@
           ],
           "description": "%config.defaultPriority.description%"
         },
-        "kanban-markdown.defaultStatus": {
+        "kanbanmd.defaultStatus": {
           "type": "string",
           "default": "backlog",
           "enum": [
@@ -152,7 +152,7 @@
           ],
           "description": "%config.defaultStatus.description%"
         },
-        "kanban-markdown.columns": {
+        "kanbanmd.columns": {
           "type": "array",
           "default": [
             {
@@ -205,7 +205,7 @@
             ]
           }
         },
-        "kanban-markdown.aiAgent": {
+        "kanbanmd.aiAgent": {
           "type": "string",
           "default": "claude",
           "enum": [
@@ -222,57 +222,57 @@
           ],
           "description": "%config.aiAgent.description%"
         },
-        "kanban-markdown.showPriorityBadges": {
+        "kanbanmd.showPriorityBadges": {
           "type": "boolean",
           "default": true,
           "description": "%config.showPriorityBadges.description%"
         },
-        "kanban-markdown.showAssignee": {
+        "kanbanmd.showAssignee": {
           "type": "boolean",
           "default": true,
           "description": "%config.showAssignee.description%"
         },
-        "kanban-markdown.showDueDate": {
+        "kanbanmd.showDueDate": {
           "type": "boolean",
           "default": true,
           "description": "%config.showDueDate.description%"
         },
-        "kanban-markdown.showLabels": {
+        "kanbanmd.showLabels": {
           "type": "boolean",
           "default": true,
           "description": "%config.showLabels.description%"
         },
-        "kanban-markdown.showEpic": {
+        "kanbanmd.showEpic": {
           "type": "boolean",
           "default": true,
           "description": "%config.showEpic.description%"
         },
-        "kanban-markdown.showBuildWithAI": {
+        "kanbanmd.showBuildWithAI": {
           "type": "boolean",
           "default": true,
           "description": "%config.showBuildWithAI.description%"
         },
-        "kanban-markdown.showFileName": {
+        "kanbanmd.showFileName": {
           "type": "boolean",
           "default": false,
           "description": "%config.showFileName.description%"
         },
-        "kanban-markdown.compactMode": {
+        "kanbanmd.compactMode": {
           "type": "boolean",
           "default": false,
           "description": "%config.compactMode.description%"
         },
-        "kanban-markdown.addNewCardsToTop": {
+        "kanbanmd.addNewCardsToTop": {
           "type": "boolean",
           "default": false,
           "description": "%config.addNewCardsToTop.description%"
         },
-        "kanban-markdown.markdownEditorMode": {
+        "kanbanmd.markdownEditorMode": {
           "type": "boolean",
           "default": false,
           "description": "%config.markdownEditorMode.description%"
         },
-        "kanban-markdown.hideScrollbar": {
+        "kanbanmd.hideScrollbar": {
           "type": "boolean",
           "default": false,
           "description": "%config.hideScrollbar.description%"
@@ -282,7 +282,7 @@
     "menus": {
       "editor/title/run": [
         {
-          "command": "kanban-markdown.open",
+          "command": "kanbanmd.open",
           "when": "resourceLangId == markdown"
         }
       ]

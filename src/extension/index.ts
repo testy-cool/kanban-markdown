@@ -67,7 +67,7 @@ async function createFeatureFromPrompts(): Promise<void> {
   })
 
   // Create the feature file
-  const config = vscode.workspace.getConfiguration('kanban-markdown')
+  const config = vscode.workspace.getConfiguration('kanbanmd')
   const featuresDirectory = config.get<string>('featuresDirectory') || '.devtool/features'
   const featuresDir = path.join(workspaceFolders[0].uri.fsPath, featuresDirectory)
   await vscode.workspace.fs.createDirectory(vscode.Uri.file(featuresDir))
@@ -114,7 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
   )
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('kanban-markdown.open', () => {
+    vscode.commands.registerCommand('kanbanmd.open', () => {
       const wasOpen = !!KanbanPanel.currentPanel
       KanbanPanel.createOrShow(context.extensionUri, context)
       if (!wasOpen && KanbanPanel.currentPanel) {
@@ -127,7 +127,7 @@ export function activate(context: vscode.ExtensionContext) {
   )
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('kanban-markdown.addFeature', () => {
+    vscode.commands.registerCommand('kanbanmd.addFeature', () => {
       createFeatureFromPrompts()
     })
   )
