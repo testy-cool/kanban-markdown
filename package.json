@@ -1,7 +1,7 @@
 {
   "name": "kanbanmd",
-  "displayName": "Kanban Markdown",
-  "description": "A kanban board for your codebase. Features stored as markdown.",
+  "displayName": "Kanban Markdown Native",
+  "description": "A kanban board for your codebase, stored as markdown files. Takes every colour and size from your VS Code theme.",
   "version": "1.16.1",
   "packageManager": "pnpm@9.15.9",
   "publisher": "testycool",
@@ -16,7 +16,7 @@
   "homepage": "https://github.com/testy-cool/kanbanmd#readme",
   "icon": "resources/icon.png",
   "galleryBanner": {
-    "color": "#1e1e1e",
+    "color": "#1f2428",
     "theme": "dark"
   },
   "engines": {
@@ -31,7 +31,8 @@
     "markdown",
     "project management",
     "task management",
-    "board"
+    "board",
+    "theme"
   ],
   "activationEvents": [
     "onWebviewPanel:kanbanmd.panel",

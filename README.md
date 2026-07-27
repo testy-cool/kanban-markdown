@@ -1,4 +1,4 @@
-# Kanban Markdown
+# Kanban Markdown Native
 
 A kanban board for VS Code, where every card is a markdown file with YAML
 frontmatter in your own repo. No accounts and no external services.
@@ -20,21 +20,7 @@ The extension is `testycool.kanbanmd`, so its settings and commands are all
 prefixed `kanbanmd.` and it can be installed alongside the original without
 either one breaking.
 
-This fork is not published to any marketplace. The icon in `resources/` is still
-upstream's and has to be replaced before it ever could be.
-
-## Install
-
-Build it and install the package.
-
-```
-pnpm install
-pnpm run package
-code --install-extension releases/kanbanmd-<version>.vsix
-```
-
-Then run `Open Kanban Board` from the command palette, and press `N` to add your
-first card.
+All artwork here is our own. See Installation below.
 
 ## Features
 
@@ -51,10 +37,6 @@ first card.
 ### Cards
 
 Each card is a markdown file with YAML frontmatter.
-
-<div align="center">
-<img src="https://raw.githubusercontent.com/LachyFS/kanban-markdown-vscode-extension/main/docs/images/board-overview.png" alt="Kanban Board Overview" width="800" />
-</div>
 
 - Priority levels — Critical, High, Medium, Low with color-coded badges
 - Assignees
@@ -76,7 +58,7 @@ Each card is a markdown file with YAML frontmatter.
 - Auto-save on change
 - Auto-refresh when files change externally
 - Native markdown mode — open files in VS Code's built-in editor instead
-- Follows your VS Code/Cursor theme (light & dark)
+- Every colour, size and corner comes from the VS Code theme you are running
 
 ## AI Agent Integration
 
@@ -123,7 +105,7 @@ Add a toggle in settings to switch between light and dark themes...
 
 ## Configuration
 
-Settings live under `kanban-markdown.*` in your VS Code/Cursor preferences.
+Settings live under `kanbanmd.*` in your VS Code preferences.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
@@ -142,6 +124,9 @@ Settings live under `kanban-markdown.*` in your VS Code/Cursor preferences.
 | `compactMode` | `false` | Use compact card layout |
 | `addNewCardsToTop` | `false` | Add new cards to the top of the column |
 | `markdownEditorMode` | `false` | Open files in VS Code's native text editor instead of the inline rich-text editor |
+| `hideScrollbar` | `false` | Hide the board scrollbars |
+| `fontSize` | `0` | Base font size in pixels. The whole board scales with it, spacing included. 0 follows the VS Code interface font size |
+| `fontFamily` | `""` | Font for the board. Empty follows the VS Code interface font |
 
 Default columns:
 
@@ -159,17 +144,19 @@ Default columns:
 
 ### VS Code Marketplace
 
-Install from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=LachyFS.kanban-markdown) or search "Kanban Markdown" in the Extensions view.
+Search "Kanban Markdown Native" in the Extensions view, or install
+[testycool.kanbanmd](https://marketplace.visualstudio.com/items?itemName=testycool.kanbanmd).
 
-### Open VSX (VSCodium, Cursor, etc.)
+### Open VSX, for VSCodium, Cursor and Windsurf
 
-Install from [Open VSX](https://open-vsx.org/extension/LachyFS/kanban-markdown) or search "Kanban Markdown" in the Extensions view.
+Search "Kanban Markdown Native" in the Extensions view, or install
+[testycool/kanbanmd](https://open-vsx.org/extension/testycool/kanbanmd).
 
-### From VSIX
+### From a VSIX file
 
-1. Download the `.vsix` from [Releases](https://github.com/LachyFS/kanban-markdown-vscode-extension/releases)
-2. In VS Code: Extensions > `...` > Install from VSIX
-3. Select the downloaded file
+1. Download the `.vsix` from [Releases](https://github.com/testy-cool/kanban-markdown/releases).
+2. In VS Code, open Extensions, then the `...` menu, then Install from VSIX.
+3. Select the file you downloaded.
 
 ## Development
 

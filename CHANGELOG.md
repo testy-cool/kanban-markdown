@@ -5,6 +5,38 @@ All notable changes to the Kanban Markdown extension will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.16.1] - 2026-07-27
+
+Forked from LachyFS/kanban-markdown-vscode-extension at 1.14.1 and renamed to
+testycool.kanbanmd, so it no longer clashes with the original over command ids,
+view ids or settings.
+
+### Changed
+
+- The board takes every colour from the running VS Code theme. About 250 fixed
+  greys and the light or dark class switching are gone. Priority badges and
+  status dots use the chart colours VS Code defines, which themes override.
+- Corners, shadows and focus outlines match VS Code. Two pixels on controls,
+  five on menus, the theme's own shadow, and a single line drawn inside a
+  focused control instead of a glowing ring.
+- The board renders at the VS Code interface font size rather than the browser
+  default of 16px, so it no longer looks oversized next to the rest of the
+  interface.
+- Hover highlights are instant. They previously faded over 150ms on 43
+  elements, which made the board feel slow.
+- New icons. All artwork is our own.
+- The package no longer ships source maps, tests or docs, which took it from
+  1.65 MB down to 293 KB.
+
+### Added
+
+- `kanbanmd.fontSize` sets the base size in pixels and scales the whole board,
+  spacing included. 0 follows the VS Code interface font size.
+- `kanbanmd.fontFamily` sets the board font. Empty follows the VS Code
+  interface font.
+
+## Upstream history
+
 ## [1.11.0] - 2026-03-01
 
 ### Added

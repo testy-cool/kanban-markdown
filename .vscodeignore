@@ -1,11 +1,27 @@
+# Source and build inputs. Only dist/ is needed at runtime.
+src/**
+tests/**
+scripts/**
+docs/**
+.github/**
 .vscode/**
 .git/**
 node_modules/**
-src/**
-*.map
+
+# Source maps. These were 2.5 MB of the package and are no use to anyone
+# installing the extension.
+**/*.map
+
+# Tooling config, none of which the extension reads at runtime.
 .gitignore
+.editorconfig
+.prettierignore
+.prettierrc.yaml
 pnpm-lock.yaml
 tsconfig.json
+tsconfig.integration.json
 vite.config.ts
+vitest.config.mts
 eslint.config.mjs
-README.md
+postcss.config.mjs
+tailwind.config.js
