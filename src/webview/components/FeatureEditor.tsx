@@ -223,7 +223,7 @@ function Dropdown({ value, options, onChange, className }: DropdownProps) {
     <div className={cn('relative', className)}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-2 py-1 text-xs font-medium rounded transition-colors vscode-hover-bg"
+        className="flex items-center gap-2 px-2 py-1 text-xs font-medium rounded vscode-hover-bg"
         style={{ color: 'var(--vscode-foreground)' }}
       >
         {current?.dot && <span className={cn('w-2 h-2 rounded-full shrink-0', current.dot)} />}
@@ -251,7 +251,7 @@ function Dropdown({ value, options, onChange, className }: DropdownProps) {
                   onChange(option.value)
                   setIsOpen(false)
                 }}
-                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs"
                 style={{
                   color: 'var(--vscode-dropdown-foreground)',
                   background:
@@ -295,7 +295,7 @@ function PropertyRow({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-[5px] transition-colors vscode-hover-bg">
+    <div className="flex items-center gap-3 px-4 py-[5px] vscode-hover-bg">
       <div className="flex items-center gap-2 w-[90px] shrink-0">
         <span style={{ color: 'var(--vscode-descriptionForeground)' }}>{icon}</span>
         <span className="text-[11px]" style={{ color: 'var(--vscode-descriptionForeground)' }}>
@@ -325,7 +325,7 @@ function AIDropdown({ onSelect }: AIDropdownProps) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-white rounded-md transition-colors',
+          'flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-white rounded-md',
           buttonColors.bg,
           buttonColors.hover,
           buttonColors.shadow,
@@ -351,7 +351,7 @@ function AIDropdown({ onSelect }: AIDropdownProps) {
                   key={tab.agent}
                   onClick={() => setSelectedTab(tab.agent)}
                   className={cn(
-                    'flex-1 px-3 py-2.5 text-xs font-medium transition-all',
+                    'flex-1 px-3 py-2.5 text-xs font-medium',
                     selectedTab === tab.agent
                       ? tab.activeColor
                       : cn('text-fg-dim', tab.color)
@@ -370,7 +370,7 @@ function AIDropdown({ onSelect }: AIDropdownProps) {
                     onSelect(selectedTab, mode.permissionMode)
                     setIsOpen(false)
                   }}
-                  className="w-full text-left px-3 py-2.5 rounded-md hover:bg-hover transition-colors"
+                  className="w-full text-left px-3 py-2.5 rounded-md hover:bg-hover"
                 >
                   <div className="text-xs font-medium text-fg-strong">
                     {mode.label}
@@ -440,7 +440,7 @@ function LabelEditor({
           {label}
           <button
             onClick={() => removeLabel(label)}
-            className="hover:text-chart-red transition-colors"
+            className="hover:text-chart-red"
           >
             <X size={9} />
           </button>
@@ -451,7 +451,7 @@ function LabelEditor({
           setIsFocused(true)
           setTimeout(() => inputRef.current?.focus(), 0)
         }}
-        className="inline-flex items-center gap-0.5 px-1 py-0.5 text-[10px] rounded transition-colors vscode-hover-bg"
+        className="inline-flex items-center gap-0.5 px-1 py-0.5 text-[10px] rounded vscode-hover-bg"
         style={{ color: 'var(--vscode-descriptionForeground)' }}
       >
         <Plus size={10} />
@@ -499,7 +499,7 @@ function LabelEditor({
                 e.preventDefault()
                 addLabel(label)
               }}
-              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs"
               style={{ color: 'var(--vscode-dropdown-foreground)' }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.background = 'var(--vscode-list-hoverBackground)')
@@ -664,13 +664,13 @@ export function FeatureEditor({
                   setConfirmingDelete(false)
                   onDelete()
                 }}
-                className="px-2 py-1 text-xs font-medium rounded transition-colors text-white bg-red-600 hover:bg-red-700"
+                className="px-2 py-1 text-xs font-medium rounded text-white bg-red-600 hover:bg-red-700"
               >
                 {t('editor.deleteYes')}
               </button>
               <button
                 onClick={() => setConfirmingDelete(false)}
-                className="px-2 py-1 text-xs font-medium rounded transition-colors vscode-hover-bg"
+                className="px-2 py-1 text-xs font-medium rounded vscode-hover-bg"
                 style={{ color: 'var(--vscode-foreground)' }}
               >
                 {t('editor.deleteNo')}
@@ -683,7 +683,7 @@ export function FeatureEditor({
                   onOpenFile()
                   onClose()
                 }}
-                className="p-1.5 px-2 rounded border transition-colors vscode-hover-bg flex items-center gap-1"
+                className="p-1.5 px-2 rounded border vscode-hover-bg flex items-center gap-1"
                 style={{
                   color: 'var(--vscode-descriptionForeground)',
                   borderColor:
@@ -696,7 +696,7 @@ export function FeatureEditor({
               </button>
               <button
                 onClick={() => setConfirmingDelete(true)}
-                className="p-1.5 px-2 rounded border transition-colors vscode-hover-bg flex items-center gap-1"
+                className="p-1.5 px-2 rounded border vscode-hover-bg flex items-center gap-1"
                 style={{
                   color: 'var(--vscode-descriptionForeground)',
                   borderColor:
@@ -714,7 +714,7 @@ export function FeatureEditor({
           {cardSettings.showBuildWithAI && <AIDropdown onSelect={onStartWithAI} />}
           <button
             onClick={onClose}
-            className="p-1.5 rounded transition-colors vscode-hover-bg"
+            className="p-1.5 rounded vscode-hover-bg"
             style={{ color: 'var(--vscode-descriptionForeground)' }}
           >
             <X size={18} />

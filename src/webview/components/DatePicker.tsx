@@ -64,7 +64,7 @@ export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-2 py-1 text-xs font-medium rounded transition-colors"
+        className="flex items-center gap-2 px-2 py-1 text-xs font-medium rounded"
         style={{
           color: value ? 'var(--vscode-foreground)' : 'var(--vscode-descriptionForeground)',
         }}
@@ -76,7 +76,7 @@ export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
           <span
             role="button"
             onClick={(e) => { e.stopPropagation(); onChange(''); setIsOpen(false) }}
-            className="ml-0.5 hover:text-chart-red transition-colors"
+            className="ml-0.5 hover:text-chart-red"
           >
             <X size={12} />
           </span>
@@ -97,7 +97,7 @@ export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
               <button
                 type="button"
                 onClick={prevMonth}
-                className="p-1 rounded transition-colors"
+                className="p-1 rounded"
                 style={{ color: 'var(--vscode-descriptionForeground)' }}
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--vscode-list-hoverBackground)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
@@ -110,7 +110,7 @@ export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
               <button
                 type="button"
                 onClick={nextMonth}
-                className="p-1 rounded transition-colors"
+                className="p-1 rounded"
                 style={{ color: 'var(--vscode-descriptionForeground)' }}
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--vscode-list-hoverBackground)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
@@ -138,7 +138,7 @@ export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
                     <button
                       type="button"
                       onClick={() => selectDay(day)}
-                      className={cn('w-7 h-7 rounded-md text-[11px] transition-colors font-medium')}
+                      className={cn('w-7 h-7 rounded-md text-[11px] font-medium')}
                       style={{
                         background: isSelected(day)
                           ? 'var(--vscode-focusBorder)'
@@ -178,7 +178,7 @@ export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
                   onChange(`${today.getFullYear()}-${m}-${d}`)
                   setIsOpen(false)
                 }}
-                className="text-[11px] font-medium transition-colors"
+                className="text-[11px] font-medium"
                 style={{ color: 'var(--vscode-textLink-foreground)' }}
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--vscode-textLink-activeForeground)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--vscode-textLink-foreground)'}

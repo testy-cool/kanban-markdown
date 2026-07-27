@@ -92,7 +92,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
   return (
     <div
       onClick={onClick}
-      className={`group relative flex flex-col bg-card rounded border border-line ${cardSettings.compactMode ? 'p-2 min-h-[4.5rem]' : 'p-3 min-h-[7rem]'} cursor-pointer hover:bg-hover transition-colors ${
+      className={`group relative flex flex-col bg-card rounded border border-line ${cardSettings.compactMode ? 'p-2 min-h-[4.5rem]' : 'p-3 min-h-[7rem]'} cursor-pointer hover:bg-hover ${
         isDragging ? 'shadow-lg opacity-90' : ''
       }`}
     >

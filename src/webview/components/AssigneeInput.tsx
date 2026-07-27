@@ -80,7 +80,7 @@ export function AssigneeInput({ value, onChange }: { value: string; onChange: (v
                 e.preventDefault()
                 onChange(assignee)
               }}
-              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs"
               style={{ color: 'var(--vscode-dropdown-foreground)' }}
               onMouseEnter={e => (e.currentTarget.style.background = 'var(--vscode-list-hoverBackground)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}

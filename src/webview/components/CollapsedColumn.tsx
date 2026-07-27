@@ -26,7 +26,7 @@ export function CollapsedColumn({
         onClick={onExpand}
         onDragOver={onDragOver}
         onDrop={(e) => onDrop(e, column.id)}
-        className="flex items-center gap-2 px-3 py-2 bg-column rounded hover:bg-hover transition-colors cursor-pointer"
+        className="flex items-center gap-2 px-3 py-2 bg-column rounded hover:bg-hover cursor-pointer"
       >
         <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: column.color }} />
         <span className="text-sm font-medium text-fg-strong">{column.name}</span>
@@ -42,7 +42,7 @@ export function CollapsedColumn({
       onClick={onExpand}
       onDragOver={onDragOver}
       onDrop={(e) => onDrop(e, column.id)}
-      className="flex-shrink-0 w-10 h-full flex flex-col items-center bg-column rounded hover:bg-hover transition-colors cursor-pointer py-3 gap-3"
+      className="flex-shrink-0 w-10 h-full flex flex-col items-center bg-column rounded hover:bg-hover cursor-pointer py-3 gap-3"
     >
       <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: column.color }} />
       <span className="text-xs text-badge-fg bg-badge px-1.5 py-0.5 rounded-full">

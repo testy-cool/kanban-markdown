@@ -70,7 +70,7 @@ function Dropdown({ value, options, onChange, className }: DropdownProps) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-2 py-1 text-xs font-medium rounded transition-colors"
+        className="flex items-center gap-2 px-2 py-1 text-xs font-medium rounded"
         style={{
           color: 'var(--vscode-foreground)'
         }}
@@ -105,7 +105,7 @@ function Dropdown({ value, options, onChange, className }: DropdownProps) {
                   onChange(option.value)
                   setIsOpen(false)
                 }}
-                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs"
                 style={{
                   color: 'var(--vscode-dropdown-foreground)',
                   background:
@@ -194,7 +194,7 @@ function LabelInput({
                 e.stopPropagation()
                 onChange(labels.filter((l) => l !== label))
               }}
-              className="hover:text-chart-red transition-colors"
+              className="hover:text-chart-red"
             >
               <X size={9} />
             </button>
@@ -241,7 +241,7 @@ function LabelInput({
                 e.preventDefault()
                 addLabel(label)
               }}
-              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs"
               style={{ color: 'var(--vscode-dropdown-foreground)' }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.background = 'var(--vscode-list-hoverBackground)')
@@ -276,7 +276,7 @@ function PropertyRow({
 }) {
   return (
     <div
-      className="flex items-center gap-3 px-4 py-[5px] transition-colors"
+      className="flex items-center gap-3 px-4 py-[5px]"
       onMouseEnter={(e) =>
         (e.currentTarget.style.background = 'var(--vscode-list-hoverBackground)')
       }
@@ -401,7 +401,7 @@ function CreateFeatureDialogContent({
           </div>
           <button
             onClick={handleClose}
-            className="p-1.5 rounded transition-colors"
+            className="p-1.5 rounded"
             style={{ color: 'var(--vscode-descriptionForeground)' }}
             onMouseEnter={(e) =>
               (e.currentTarget.style.background = 'var(--vscode-list-hoverBackground)')

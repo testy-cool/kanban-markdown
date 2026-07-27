@@ -124,7 +124,7 @@ export function LabelManager({ onClose }: Readonly<LabelManagerProps>) {
           </div>
           <button
             onClick={onClose}
-            className="p-0.5 rounded transition-colors"
+            className="p-0.5 rounded"
             style={{ color: 'var(--vscode-descriptionForeground)' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--vscode-foreground)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--vscode-descriptionForeground)'}
@@ -160,7 +160,7 @@ export function LabelManager({ onClose }: Readonly<LabelManagerProps>) {
                   />
                   <button
                     onClick={handleConfirmRename}
-                    className="p-1 rounded transition-colors shrink-0"
+                    className="p-1 rounded shrink-0"
                     title={t('labels.confirmRename')}
                     style={{ color: 'var(--vscode-testing-iconPassed, #22c55e)' }}
                   >
@@ -168,7 +168,7 @@ export function LabelManager({ onClose }: Readonly<LabelManagerProps>) {
                   </button>
                   <button
                     onClick={handleCancelEdit}
-                    className="p-1 rounded transition-colors shrink-0"
+                    className="p-1 rounded shrink-0"
                     title={t('labels.cancel')}
                     style={{ color: 'var(--vscode-descriptionForeground)' }}
                   >
@@ -197,7 +197,7 @@ export function LabelManager({ onClose }: Readonly<LabelManagerProps>) {
                   })()}
                   <button
                     onClick={() => handleStartEdit(label)}
-                    className="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                    className="p-1 rounded opacity-0 group-hover:opacity-100 shrink-0"
                     title={t('labels.renameLabel')}
                     style={{ color: 'var(--vscode-descriptionForeground)' }}
                     onMouseEnter={e => e.currentTarget.style.color = 'var(--vscode-foreground)'}
@@ -207,7 +207,7 @@ export function LabelManager({ onClose }: Readonly<LabelManagerProps>) {
                   </button>
                   <button
                     onClick={() => handleDelete(label)}
-                    className="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                    className="p-1 rounded opacity-0 group-hover:opacity-100 shrink-0"
                     title={t('labels.deleteLabel')}
                     style={{ color: 'var(--vscode-descriptionForeground)' }}
                     onMouseEnter={e => e.currentTarget.style.color = 'var(--vscode-errorForeground)'}

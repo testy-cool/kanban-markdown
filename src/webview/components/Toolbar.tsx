@@ -154,7 +154,7 @@ export function Toolbar({
       {filtersActive && (
         <button
           onClick={clearAllFilters}
-          className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
+          className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
           title={t('toolbar.clearAllFilters')}
         >
           <X size={14} />
@@ -165,7 +165,7 @@ export function Toolbar({
       {/* Layout Toggle */}
       <button
         onClick={toggleLayout}
-        className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
+        className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
         title={layout === 'horizontal' ? t('toolbar.switchToVertical') : t('toolbar.switchToHorizontal')}
       >
         {layout === 'horizontal' ? <Rows size={16} /> : <Columns size={16} />}
@@ -175,7 +175,7 @@ export function Toolbar({
       <button
         type="button"
         onClick={() => onBoardViewModeChange(boardViewMode === 'standard' ? 'epic' : 'standard')}
-        className={`flex items-center gap-1 px-2 py-1.5 text-sm rounded-md transition-colors ${
+        className={`flex items-center gap-1 px-2 py-1.5 text-sm rounded-md ${
           boardViewMode === 'epic'
             ? 'text-fg-strong bg-selected'
             : 'text-fg-dim hover:text-fg hover:bg-hover'
@@ -190,7 +190,7 @@ export function Toolbar({
         <div className="relative">
           <button
             onClick={() => setLabelManagerOpen(!labelManagerOpen)}
-            className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
+            className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
             title={t('toolbar.manageLabels')}
           >
             <Tags size={14} />
@@ -204,7 +204,7 @@ export function Toolbar({
       {/* Settings */}
       <button
         onClick={onOpenSettings}
-        className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
+        className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
         title={t('toolbar.openSettings')}
       >
         <Settings size={16} />

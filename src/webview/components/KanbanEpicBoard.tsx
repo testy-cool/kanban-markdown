@@ -87,7 +87,7 @@ export function KanbanEpicBoard({ onFeatureClick, onAddFeature, onMoveFeature }:
             <button
               type="button"
               onClick={() => handleToggleEpic(laneKey)}
-              className="w-full flex items-center gap-2 px-3 py-2 text-left transition-colors hover:bg-hover"
+              className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-hover"
             >
               {collapsed ? (
                 <ChevronRight

@@ -50,7 +50,7 @@ export function QuickAddInput({ status, onAdd }: QuickAddInputProps) {
     return (
       <button
         onClick={() => setIsEditing(true)}
-        className="w-full flex items-center gap-1.5 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
+        className="w-full flex items-center gap-1.5 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
       >
         <Plus size={14} />
         <span>{t('quickAdd.addFeature')}</span>

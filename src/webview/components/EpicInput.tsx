@@ -65,7 +65,7 @@ export function EpicInput({ value, onChange }: { value: string; onChange: (value
                   e.preventDefault()
                   onChange(epic)
                 }}
-                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs transition-colors text-left"
+                className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-left"
                 style={{ color: 'var(--vscode-dropdown-foreground)' }}
                 onMouseEnter={e => (e.currentTarget.style.background = 'var(--vscode-list-hoverBackground)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}

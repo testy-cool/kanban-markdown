@@ -83,14 +83,14 @@ export function KanbanColumn({
         <div className="flex items-center gap-0.5">
           <button
             onClick={onCollapse}
-            className="p-0.5 rounded hover:bg-hover transition-colors cursor-pointer"
+            className="p-0.5 rounded hover:bg-hover cursor-pointer"
             title={t('column.collapse', { name: column.name })}
           >
             <ChevronLeft size={16} className="text-fg-dim" />
           </button>
           <button
             onClick={() => onAddFeature(column.id)}
-            className="p-0.5 rounded hover:bg-hover transition-colors cursor-pointer"
+            className="p-0.5 rounded hover:bg-hover cursor-pointer"
             title={t('column.addTo', { name: column.name })}
           >
             <Plus size={16} className="text-fg-dim" />
@@ -98,7 +98,7 @@ export function KanbanColumn({
           <div ref={menuRef} className="relative flex">
             <button
               onClick={() => setMenuOpen((o) => !o)}
-              className="p-0.5 rounded hover:bg-hover transition-colors cursor-pointer"
+              className="p-0.5 rounded hover:bg-hover cursor-pointer"
               title={t('column.options')}
             >
               <MoreVertical size={16} className="text-fg-dim" />

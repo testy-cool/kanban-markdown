@@ -37,7 +37,7 @@ export function UndoToast({ message, onUndo, onExpire, duration, index }: UndoTo
 
   return (
     <div
-      className="fixed right-4 z-50 flex flex-col min-w-[320px] max-w-[420px] shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-[bottom] duration-200 ease-out"
+      className="fixed right-4 z-50 flex flex-col min-w-[320px] max-w-[420px] shadow-lg transition-[bottom] duration-200 ease-out"
       style={{
         bottom: `${24 + index * 52}px`,
         background: 'var(--vscode-notifications-background)',
