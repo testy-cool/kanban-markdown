@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Overwritten from the fontSize and fontFamily settings. The defaults here
+     follow VS Code, which is what a size of 0 and an empty family mean. */
+  --kanban-font-size: var(--vscode-font-size, 13px);
+  --kanban-font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif);
+}
+
 html,
 body {
   margin: 0;
@@ -13,12 +20,19 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif);
-  font-size: var(--vscode-font-size, 13px);
+  font-family: var(--kanban-font-family);
   color: var(--vscode-foreground);
   background-color: var(--vscode-editor-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Every text size and every gap on the board is written in rem, so the root
+   font size is the single dial that scales the board. Without this the board
+   would sit at the browser default of 16px and look oversized next to the rest
+   of the VS Code interface, which runs at 13px. */
+html {
+  font-size: var(--kanban-font-size);
 }
 
 #root {
@@ -100,10 +114,17 @@ html.hide-scrollbar::-webkit-scrollbar {
   border-color: color-mix(in srgb, var(--vscode-charts-green, #89d185) 32%, transparent);
 }
 
-/* Focus visible for accessibility */
+/* Focus. VS Code draws a single one pixel line inside the edge of the control
+   rather than a glow around it, so the board does the same instead of using
+   the ring utilities. */
 button:focus-visible,
-input:focus-visible {
-  outline: 1px solid var(--vscode-focusBorder);
+a:focus-visible,
+[role='button']:focus-visible,
+[contenteditable]:focus-visible,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 1px solid var(--vscode-focusBorder, #007fd4);
   outline-offset: -1px;
 }
 

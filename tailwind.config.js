@@ -16,7 +16,13 @@ export default {
         board: 'var(--vscode-editor-background, #1e1e1e)',
         column: 'var(--vscode-sideBar-background, var(--vscode-editor-background, #1e1e1e))',
         card: 'var(--vscode-editorWidget-background, #252526)',
-        raised: 'var(--vscode-dropdown-background, var(--vscode-editorWidget-background, #252526))',
+        // Floating surfaces. VS Code paints menus from their own colours, and
+        // falls back through the dropdown and widget colours when a theme
+        // leaves the menu ones unset.
+        raised: 'var(--vscode-menu-background, var(--vscode-dropdown-background, var(--vscode-editorWidget-background, #252526)))',
+        'raised-fg': 'var(--vscode-menu-foreground, var(--vscode-dropdown-foreground, var(--vscode-foreground, #cccccc)))',
+        'raised-line': 'var(--vscode-menu-border, var(--vscode-widget-border, var(--vscode-panel-border, rgba(128, 128, 128, 0.35))))',
+        'raised-hover': 'var(--vscode-menu-selectionBackground, var(--vscode-list-activeSelectionBackground, rgba(128, 128, 128, 0.25)))',
         hover: 'var(--vscode-list-hoverBackground, rgba(128, 128, 128, 0.15))',
         selected: 'var(--vscode-list-activeSelectionBackground, rgba(128, 128, 128, 0.25))',
         // Lines.
@@ -53,8 +59,29 @@ export default {
         'badge-fg': 'var(--vscode-badge-foreground, #cccccc)',
       },
       fontFamily: {
-        sans: ['var(--vscode-font-family)', 'sans-serif'],
+        sans: ['var(--kanban-font-family)', 'sans-serif'],
         mono: ['var(--vscode-editor-font-family)', 'monospace'],
+      },
+      // VS Code rounds controls at 2px and floating surfaces at 5px. These are
+      // fixed pixels rather than rem so a larger font size does not turn the
+      // corners into bubbles.
+      borderRadius: {
+        none: '0',
+        DEFAULT: '2px',
+        sm: '2px',
+        md: '3px',
+        lg: '5px',
+        xl: '5px',
+        full: '9999px',
+      },
+      // VS Code floats menus and dialogs on one soft shadow that the theme
+      // provides, rather than the layered shadows Tailwind ships.
+      boxShadow: {
+        DEFAULT: '0 2px 8px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36))',
+        sm: '0 1px 4px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36))',
+        md: '0 2px 8px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36))',
+        lg: '0 4px 12px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36))',
+        xl: '0 8px 16px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36))',
       },
       typography: () => ({
         DEFAULT: {

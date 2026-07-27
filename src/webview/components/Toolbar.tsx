@@ -26,7 +26,7 @@ function getDueDateOptions(): { value: DueDateFilter; label: string }[] {
 }
 
 const selectClassName =
-  'text-sm bg-input border border-input-line rounded focus:outline-none focus:ring-1 focus:ring-focus text-input-fg px-2 py-1.5'
+  'text-sm bg-input border border-input-line rounded focus:outline-none text-input-fg px-2 py-1.5'
 
 export function Toolbar({
   onOpenSettings,
@@ -78,7 +78,7 @@ export function Toolbar({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('toolbar.search')}
-          className="w-full pl-8 pr-3 py-1.5 text-sm bg-input border border-input-line rounded focus:outline-none focus:ring-1 focus:ring-focus text-input-fg placeholder-input-ph"
+          className="w-full pl-8 pr-3 py-1.5 text-sm bg-input border border-input-line rounded focus:outline-none text-input-fg placeholder-input-ph"
         />
       </div>
 

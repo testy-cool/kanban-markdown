@@ -87,6 +87,10 @@ export interface CardDisplaySettings {
   hideScrollbar: boolean
   defaultPriority: Priority
   defaultStatus: FeatureStatus
+  /** Base font size in px. 0 means follow the VS Code UI font size. */
+  fontSize: number
+  /** Board font. Empty means follow the VS Code UI font. */
+  fontFamily: string
 }
 
 // Messages between extension and webview

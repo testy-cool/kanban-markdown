@@ -113,7 +113,9 @@ export const useStore = create<KanbanState>((set, get) => ({
     markdownEditorMode: false,
     hideScrollbar: false,
     defaultPriority: 'medium',
-    defaultStatus: 'backlog'
+    defaultStatus: 'backlog',
+    fontSize: 0,
+    fontFamily: ''
   },
 
   setLocale: (locale) => set({ locale }),

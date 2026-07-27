@@ -343,7 +343,7 @@ function AIDropdown({ onSelect }: AIDropdownProps) {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-          <div className="absolute top-full right-0 mt-1 z-20 bg-raised border border-line rounded shadow-xl min-w-[260px] overflow-hidden">
+          <div className="absolute top-full right-0 mt-1 z-20 bg-raised text-raised-fg border border-raised-line rounded-lg shadow-xl min-w-[260px] overflow-hidden">
             {/* Tabs */}
             <div className="flex">
               {aiAgentTabs.map((tab) => (

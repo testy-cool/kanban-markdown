@@ -67,7 +67,7 @@ export function QuickAddInput({ status, onAdd }: QuickAddInputProps) {
       onBlur={handleSubmit}
       onKeyDown={handleKeyDown}
       placeholder={t('quickAdd.featureTitle')}
-      className="w-full px-2 py-1.5 text-sm bg-input border border-input-line rounded focus:outline-none focus:ring-1 focus:ring-focus text-input-fg placeholder-input-ph"
+      className="w-full px-2 py-1.5 text-sm bg-input border border-input-line rounded focus:outline-none text-input-fg placeholder-input-ph"
     />
   )
 }

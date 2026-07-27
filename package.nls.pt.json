@@ -46,5 +46,7 @@
   "config.language.auto": "Seguir o idioma do VS Code",
   "config.language.en": "Inglês (English)",
   "config.language.es": "Espanhol (Español)",
-  "config.language.pt": "Português"
+  "config.language.pt": "Português",
+  "config.fontSize.description": "Tamanho da fonte base do quadro, em pixels. Todo o quadro escala com ele. Use 0 para seguir o tamanho da fonte da interface do VS Code.",
+  "config.fontFamily.description": "Fonte do quadro. Deixe vazio para seguir a fonte da interface do VS Code."
 }

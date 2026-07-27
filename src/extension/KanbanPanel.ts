@@ -1164,7 +1164,9 @@ export class KanbanPanel {
       markdownEditorMode: config.get<boolean>('markdownEditorMode', false),
       hideScrollbar: config.get<boolean>('hideScrollbar', false),
       defaultPriority: config.get<Priority>('defaultPriority', 'medium'),
-      defaultStatus: config.get<FeatureStatus>('defaultStatus', 'backlog')
+      defaultStatus: config.get<FeatureStatus>('defaultStatus', 'backlog'),
+      fontSize: config.get<number>('fontSize', 0),
+      fontFamily: config.get<string>('fontFamily', '')
     }
 
     const collapsedColumns: string[] = this._context.workspaceState.get('kanbanmd.collapsedColumns', [])

@@ -26,7 +26,7 @@ export function PrioritySelect({ value, onChange, className = '' }: PrioritySele
       <select
         value={value}
         onChange={(e) => onChange(e.target.value as Priority)}
-        className="appearance-none w-full bg-input border border-input-line rounded focus:outline-none focus:ring-1 focus:ring-focus text-input-fg px-3 py-2 pr-8 text-sm cursor-pointer"
+        className="appearance-none w-full bg-input border border-input-line rounded focus:outline-none text-input-fg px-3 py-2 pr-8 text-sm cursor-pointer"
       >
         {priorities.map((p) => (
           <option key={p.value} value={p.value}>

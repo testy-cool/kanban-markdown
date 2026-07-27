@@ -104,24 +104,24 @@ export function KanbanColumn({
               <MoreVertical size={16} className="text-fg-dim" />
             </button>
             {menuOpen && (
-              <div className="absolute right-0 top-full mt-1 z-50 min-w-[200px] bg-raised border border-line rounded shadow-lg py-1">
+              <div className="absolute right-0 top-full mt-1 z-50 min-w-[200px] bg-raised text-raised-fg border border-raised-line rounded-lg shadow-lg py-1">
                 <div
                   className={`relative ${features.length === 0 ? 'opacity-40 pointer-events-none' : ''}`}
                   onMouseEnter={() => setSubmenuOpen(true)}
                   onMouseLeave={() => setSubmenuOpen(false)}
                 >
                   <button
-                    className="w-full text-left px-3 py-1.5 text-sm text-fg hover:bg-hover flex items-center justify-between gap-2"
+                    className="w-full text-left px-3 py-1.5 text-sm hover:bg-raised-hover flex items-center justify-between gap-2"
                   >
                     <span>{t('column.moveAllCards')}</span>
                     <ChevronRight size={14} className="text-fg-dim flex-shrink-0" />
                   </button>
                   {submenuOpen && (
-                    <div className="absolute left-full top-0 ml-0.5 z-50 min-w-[160px] bg-raised border border-line rounded shadow-lg py-1">
+                    <div className="absolute left-full top-0 ml-0.5 z-50 min-w-[160px] bg-raised text-raised-fg border border-raised-line rounded-lg shadow-lg py-1">
                       {otherColumns.map((col) => (
                         <button
                           key={col.id}
-                          className="w-full text-left px-3 py-1.5 text-sm text-fg hover:bg-hover flex items-center gap-2"
+                          className="w-full text-left px-3 py-1.5 text-sm hover:bg-raised-hover flex items-center gap-2"
                           onClick={() => { onMoveAllCards(col.id); setMenuOpen(false); setSubmenuOpen(false) }}
                         >
                           <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: col.color }} />
@@ -133,7 +133,7 @@ export function KanbanColumn({
                 </div>
                 {onArchiveAllCards && (
                   <button
-                    className={`w-full text-left px-3 py-1.5 text-sm text-fg hover:bg-hover ${features.length === 0 ? 'opacity-40 pointer-events-none' : ''}`}
+                    className={`w-full text-left px-3 py-1.5 text-sm hover:bg-raised-hover ${features.length === 0 ? 'opacity-40 pointer-events-none' : ''}`}
                     onClick={() => { onArchiveAllCards(); setMenuOpen(false) }}
                   >
                     {t('column.archiveAllCards')}

@@ -195,6 +195,21 @@ function App(): React.JSX.Element {
     document.documentElement.classList.toggle('hide-scrollbar', cardSettings.hideScrollbar)
   }, [cardSettings.hideScrollbar])
 
+  // Apply the font settings. Sizes and spacing across the board are written in
+  // rem, so setting the root font size scales the whole board together rather
+  // than only the text. A size of 0 and an empty family mean follow VS Code.
+  useEffect(() => {
+    const root = document.documentElement
+    root.style.setProperty(
+      '--kanban-font-size',
+      cardSettings.fontSize > 0 ? `${cardSettings.fontSize}px` : 'var(--vscode-font-size, 13px)'
+    )
+    root.style.setProperty(
+      '--kanban-font-family',
+      cardSettings.fontFamily.trim() || 'var(--vscode-font-family)'
+    )
+  }, [cardSettings.fontSize, cardSettings.fontFamily])
+
   // Listen for messages from extension
   useEffect(() => {
     const handleMessage = (event: MessageEvent<ExtensionMessage>) => {
