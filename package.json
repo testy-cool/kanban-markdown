@@ -1,8 +1,8 @@
 {
   "name": "kanbanmd",
-  "displayName": "Kanban Markdown Native",
-  "description": "A kanban board for your codebase, stored as markdown files. Takes every colour and size from your VS Code theme.",
-  "version": "1.16.1",
+  "displayName": "Kanban Board for Markdown Files",
+  "description": "Kanban board for VS Code where every task is a markdown file in your git repo. Drag and drop cards, labels, priorities and search, all stored as plain markdown you can commit and diff. Matches your VS Code theme.",
+  "version": "1.16.2",
   "packageManager": "pnpm@9.15.9",
   "publisher": "testycool",
   "license": "MIT",
@@ -23,16 +23,26 @@
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Other",
-    "Visualization"
+    "Notebooks",
+    "Visualization",
+    "Other"
   ],
   "keywords": [
     "kanban",
+    "kanban board",
     "markdown",
-    "project management",
+    "markdown kanban",
+    "task board",
+    "todo",
     "task management",
-    "board",
-    "theme"
+    "project management",
+    "backlog",
+    "agile",
+    "scrum",
+    "sprint",
+    "issues",
+    "notes",
+    "git"
   ],
   "activationEvents": [
     "onWebviewPanel:kanbanmd.panel",
