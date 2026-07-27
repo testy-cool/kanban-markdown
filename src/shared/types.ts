@@ -93,6 +93,11 @@ export interface CardDisplaySettings {
   fontFamily: string
   /** How many lines of the card body to show before cutting it off. */
   cardExcerptLines: number
+  /** Per piece font sizes in px. 0 means derive it from fontSize. */
+  cardTitleFontSize: number
+  cardExcerptFontSize: number
+  columnHeaderFontSize: number
+  toolbarFontSize: number
 }
 
 // Messages between extension and webview

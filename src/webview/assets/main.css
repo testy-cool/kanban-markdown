@@ -78,9 +78,36 @@ html.hide-scrollbar::-webkit-scrollbar {
   background: var(--vscode-list-hoverBackground);
 }
 
+/* Text sizes that have their own setting. Each falls back to a rem value, so
+   leaving a setting at 0 keeps that piece in proportion with the board font
+   size rather than pinning it to a fixed number of pixels. */
+:root {
+  --kanban-card-title-size: 0.875rem;
+  --kanban-card-excerpt-size: 0.75rem;
+  --kanban-column-header-size: 0.875rem;
+  --kanban-toolbar-size: 0.875rem;
+}
+
+.card-title {
+  font-size: var(--kanban-card-title-size);
+}
+
+.column-header {
+  font-size: var(--kanban-column-header-size);
+}
+
+/* Set on the toolbar itself so every control inside it inherits the size. */
+.toolbar-text,
+.toolbar-text input,
+.toolbar-text select,
+.toolbar-text button {
+  font-size: var(--kanban-toolbar-size);
+}
+
 /* Card excerpt. The number of lines is a setting, so the clamp is set from the
    component rather than by a Tailwind class, which only covers one to six. */
 .excerpt {
+  font-size: var(--kanban-card-excerpt-size);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;

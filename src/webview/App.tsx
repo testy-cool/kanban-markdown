@@ -208,7 +208,26 @@ function App(): React.JSX.Element {
       '--kanban-font-family',
       cardSettings.fontFamily.trim() || 'var(--vscode-font-family)'
     )
-  }, [cardSettings.fontSize, cardSettings.fontFamily])
+
+    // Each piece of text can be set on its own. A 0 keeps the proportion it
+    // had, expressed in rem, so it still follows the base size.
+    const parts: Array<[string, number, string]> = [
+      ['card-title', cardSettings.cardTitleFontSize, '0.875rem'],
+      ['card-excerpt', cardSettings.cardExcerptFontSize, '0.75rem'],
+      ['column-header', cardSettings.columnHeaderFontSize, '0.875rem'],
+      ['toolbar', cardSettings.toolbarFontSize, '0.875rem'],
+    ]
+    for (const [name, size, fallback] of parts) {
+      root.style.setProperty(`--kanban-${name}-size`, size > 0 ? `${size}px` : fallback)
+    }
+  }, [
+    cardSettings.fontSize,
+    cardSettings.fontFamily,
+    cardSettings.cardTitleFontSize,
+    cardSettings.cardExcerptFontSize,
+    cardSettings.columnHeaderFontSize,
+    cardSettings.toolbarFontSize,
+  ])
 
   // Listen for messages from extension
   useEffect(() => {

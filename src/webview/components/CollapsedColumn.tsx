@@ -29,7 +29,7 @@ export function CollapsedColumn({
         className="flex items-center gap-2 px-3 py-2 bg-column rounded hover:bg-hover cursor-pointer"
       >
         <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: column.color }} />
-        <span className="text-sm font-medium text-fg-strong">{column.name}</span>
+        <span className="column-header font-medium text-fg-strong">{column.name}</span>
         <span className="text-xs text-badge-fg bg-badge px-1.5 py-0.5 rounded-full">
           {featureCount}
         </span>
@@ -49,7 +49,7 @@ export function CollapsedColumn({
         {featureCount}
       </span>
       <span
-        className="text-sm font-medium text-fg-strong"
+        className="column-header font-medium text-fg-strong"
         style={{ writingMode: 'vertical-rl' }}
       >
         {column.name}

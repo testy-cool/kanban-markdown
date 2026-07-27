@@ -49,5 +49,9 @@
   "config.language.pt": "Portugués (Português)",
   "config.fontSize.description": "Tamano de fuente base del tablero, en pixeles. Todo el tablero escala con el. Usa 0 para seguir el tamano de fuente de la interfaz de VS Code.",
   "config.fontFamily.description": "Fuente del tablero. Dejalo vacio para seguir la fuente de la interfaz de VS Code.",
-  "config.cardExcerptLines.description": "Cuantas lineas del cuerpo de la tarjeta mostrar en la tarjeta. Usa 0 para no mostrar ninguna."
+  "config.cardExcerptLines.description": "Cuantas lineas del cuerpo de la tarjeta mostrar en la tarjeta. Usa 0 para no mostrar ninguna.",
+  "config.cardTitleFontSize.description": "Tamano de fuente en pixeles para el titulo de una tarjeta. Usa 0 para derivarlo del tamano de fuente del tablero.",
+  "config.cardExcerptFontSize.description": "Tamano de fuente en pixeles para el texto del cuerpo de una tarjeta. Usa 0 para derivarlo del tamano de fuente del tablero.",
+  "config.columnHeaderFontSize.description": "Tamano de fuente en pixeles para los nombres de las columnas. Usa 0 para derivarlo del tamano de fuente del tablero.",
+  "config.toolbarFontSize.description": "Tamano de fuente en pixeles para la barra de herramientas. Usa 0 para derivarlo del tamano de fuente del tablero."
 }

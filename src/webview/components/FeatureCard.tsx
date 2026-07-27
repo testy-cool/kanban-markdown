@@ -105,7 +105,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
         )}
 
         <div className={`flex items-start gap-2 ${description ? 'mb-1' : cardSettings.compactMode ? 'mb-1' : 'mb-2'}`}>
-          <h3 className="text-sm font-medium text-fg-strong line-clamp-2 flex-1">
+          <h3 className="card-title font-medium text-fg-strong line-clamp-2 flex-1">
             {title}
           </h3>
           {cardSettings.showPriorityBadges && !(cardSettings.showFileName && fileName) && (
@@ -120,7 +120,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
         {/* Description */}
         {description && !cardSettings.compactMode && cardSettings.cardExcerptLines > 0 && (
           <p
-            className="excerpt text-xs text-fg-dim mb-2"
+            className="excerpt text-fg-dim mb-2"
             style={{ WebkitLineClamp: cardSettings.cardExcerptLines }}
           >
             {renderInlineMarkdown(description)}

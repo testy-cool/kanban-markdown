@@ -49,5 +49,9 @@
   "config.language.pt": "Portuguese (Português)",
   "config.fontSize.description": "Base font size for the board, in pixels. Everything on the board scales with it. Set 0 to follow the VS Code interface font size.",
   "config.fontFamily.description": "Font for the board. Leave empty to follow the VS Code interface font.",
-  "config.cardExcerptLines.description": "How many lines of the card body to show on a card. Set 0 to show none."
+  "config.cardExcerptLines.description": "How many lines of the card body to show on a card. Set 0 to show none.",
+  "config.cardTitleFontSize.description": "Font size in pixels for the title on a card. Set 0 to derive it from the board font size.",
+  "config.cardExcerptFontSize.description": "Font size in pixels for the body text on a card. Set 0 to derive it from the board font size.",
+  "config.columnHeaderFontSize.description": "Font size in pixels for the column names. Set 0 to derive it from the board font size.",
+  "config.toolbarFontSize.description": "Font size in pixels for the toolbar above the board. Set 0 to derive it from the board font size."
 }

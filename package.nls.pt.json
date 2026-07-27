@@ -49,5 +49,9 @@
   "config.language.pt": "Português",
   "config.fontSize.description": "Tamanho da fonte base do quadro, em pixels. Todo o quadro escala com ele. Use 0 para seguir o tamanho da fonte da interface do VS Code.",
   "config.fontFamily.description": "Fonte do quadro. Deixe vazio para seguir a fonte da interface do VS Code.",
-  "config.cardExcerptLines.description": "Quantas linhas do corpo do cartao mostrar no cartao. Use 0 para nao mostrar nenhuma."
+  "config.cardExcerptLines.description": "Quantas linhas do corpo do cartao mostrar no cartao. Use 0 para nao mostrar nenhuma.",
+  "config.cardTitleFontSize.description": "Tamanho da fonte em pixels para o titulo de um cartao. Use 0 para deriva-lo do tamanho da fonte do quadro.",
+  "config.cardExcerptFontSize.description": "Tamanho da fonte em pixels para o texto do corpo de um cartao. Use 0 para deriva-lo do tamanho da fonte do quadro.",
+  "config.columnHeaderFontSize.description": "Tamanho da fonte em pixels para os nomes das colunas. Use 0 para deriva-lo do tamanho da fonte do quadro.",
+  "config.toolbarFontSize.description": "Tamanho da fonte em pixels para a barra de ferramentas. Use 0 para deriva-lo do tamanho da fonte do quadro."
 }

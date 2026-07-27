@@ -116,7 +116,11 @@ export const useStore = create<KanbanState>((set, get) => ({
     defaultStatus: 'backlog',
     fontSize: 0,
     fontFamily: '',
-    cardExcerptLines: 4
+    cardExcerptLines: 4,
+    cardTitleFontSize: 0,
+    cardExcerptFontSize: 0,
+    columnHeaderFontSize: 0,
+    toolbarFontSize: 0
   },
 
   setLocale: (locale) => set({ locale }),

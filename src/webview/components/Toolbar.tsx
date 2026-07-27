@@ -26,7 +26,7 @@ function getDueDateOptions(): { value: DueDateFilter; label: string }[] {
 }
 
 const selectClassName =
-  'text-sm bg-input border border-input-line rounded focus:outline-none text-input-fg px-2 py-1.5'
+  'bg-input border border-input-line rounded focus:outline-none text-input-fg px-2 py-1.5'
 
 export function Toolbar({
   onOpenSettings,
@@ -66,7 +66,7 @@ export function Toolbar({
   const [labelManagerOpen, setLabelManagerOpen] = useState(false)
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 border-b border-line bg-column flex-wrap">
+    <div className="toolbar-text flex items-center gap-2 px-4 py-2 border-b border-line bg-column flex-wrap">
       {/* Search */}
       <div className="relative flex-1 min-w-[180px] max-w-xs">
         <Search
@@ -78,7 +78,7 @@ export function Toolbar({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('toolbar.search')}
-          className="w-full pl-8 pr-3 py-1.5 text-sm bg-input border border-input-line rounded focus:outline-none text-input-fg placeholder-input-ph"
+          className="w-full pl-8 pr-3 py-1.5 bg-input border border-input-line rounded focus:outline-none text-input-fg placeholder-input-ph"
         />
       </div>
 
@@ -154,7 +154,7 @@ export function Toolbar({
       {filtersActive && (
         <button
           onClick={clearAllFilters}
-          className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
+          className="flex items-center gap-1 px-2 py-1.5 text-fg-dim hover:text-fg hover:bg-hover rounded"
           title={t('toolbar.clearAllFilters')}
         >
           <X size={14} />
@@ -165,7 +165,7 @@ export function Toolbar({
       {/* Layout Toggle */}
       <button
         onClick={toggleLayout}
-        className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
+        className="flex items-center gap-1 px-2 py-1.5 text-fg-dim hover:text-fg hover:bg-hover rounded"
         title={layout === 'horizontal' ? t('toolbar.switchToVertical') : t('toolbar.switchToHorizontal')}
       >
         {layout === 'horizontal' ? <Rows size={16} /> : <Columns size={16} />}
@@ -175,7 +175,7 @@ export function Toolbar({
       <button
         type="button"
         onClick={() => onBoardViewModeChange(boardViewMode === 'standard' ? 'epic' : 'standard')}
-        className={`flex items-center gap-1 px-2 py-1.5 text-sm rounded-md ${
+        className={`flex items-center gap-1 px-2 py-1.5 rounded-md ${
           boardViewMode === 'epic'
             ? 'text-fg-strong bg-selected'
             : 'text-fg-dim hover:text-fg hover:bg-hover'
@@ -190,7 +190,7 @@ export function Toolbar({
         <div className="relative">
           <button
             onClick={() => setLabelManagerOpen(!labelManagerOpen)}
-            className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
+            className="flex items-center gap-1 px-2 py-1.5 text-fg-dim hover:text-fg hover:bg-hover rounded"
             title={t('toolbar.manageLabels')}
           >
             <Tags size={14} />
@@ -204,7 +204,7 @@ export function Toolbar({
       {/* Settings */}
       <button
         onClick={onOpenSettings}
-        className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded"
+        className="flex items-center gap-1 px-2 py-1.5 text-fg-dim hover:text-fg hover:bg-hover rounded"
         title={t('toolbar.openSettings')}
       >
         <Settings size={16} />
