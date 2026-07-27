@@ -3,15 +3,16 @@ import { useStore, type DueDateFilter } from '../store'
 import type { BoardViewMode, Priority } from '../../shared/types'
 import { useState } from 'react'
 import { LabelManager } from './LabelManager'
+import { Select } from './Select'
 import { t } from '../lib/i18n'
 
-function getPriorities(): { value: Priority | 'all'; label: string }[] {
+function getPriorities() {
   return [
     { value: 'all', label: t('toolbar.allPriorities') },
-    { value: 'critical', label: t('priority.critical') },
-    { value: 'high', label: t('priority.high') },
-    { value: 'medium', label: t('priority.medium') },
-    { value: 'low', label: t('priority.low') }
+    { value: 'critical', label: t('priority.critical'), dotClassName: 'bg-chart-red' },
+    { value: 'high', label: t('priority.high'), dotClassName: 'bg-chart-orange' },
+    { value: 'medium', label: t('priority.medium'), dotClassName: 'bg-chart-yellow' },
+    { value: 'low', label: t('priority.low'), dotClassName: 'bg-chart-green' }
   ]
 }
 
@@ -25,8 +26,7 @@ function getDueDateOptions(): { value: DueDateFilter; label: string }[] {
   ]
 }
 
-const selectClassName =
-  'bg-input border border-input-line rounded focus:outline-none text-input-fg px-2 py-1.5'
+const SELECT_WIDTH = 'min-w-[8rem]'
 
 export function Toolbar({
   onOpenSettings,
@@ -84,70 +84,54 @@ export function Toolbar({
 
       {/* Priority Filter */}
       {cardSettings.showPriorityBadges && (
-        <select
+        <Select
           value={priorityFilter}
-          onChange={(e) => setPriorityFilter(e.target.value as Priority | 'all')}
-          className={selectClassName}
-        >
-          {priorities.map((p) => (
-            <option key={p.value} value={p.value}>
-              {p.label}
-            </option>
-          ))}
-        </select>
+          options={priorities}
+          onChange={(v) => setPriorityFilter(v as Priority | 'all')}
+          className={SELECT_WIDTH}
+          title={t('toolbar.allPriorities')}
+        />
       )}
 
       {/* Assignee Filter */}
       {cardSettings.showAssignee && (
-        <select
+        <Select
           value={assigneeFilter}
-          onChange={(e) => setAssigneeFilter(e.target.value)}
-          className={selectClassName}
-        >
-          <option value="all">{t('toolbar.allAssignees')}</option>
-          <option value="unassigned">{t('toolbar.unassigned')}</option>
-          {assignees.map((a) => (
-            <option key={a} value={a}>
-              {a}
-            </option>
-          ))}
-        </select>
+          options={[
+            { value: 'all', label: t('toolbar.allAssignees') },
+            { value: 'unassigned', label: t('toolbar.unassigned') },
+            ...assignees.map((a) => ({ value: a, label: a, group: t('toolbar.allAssignees') }))
+          ]}
+          onChange={setAssigneeFilter}
+          className={SELECT_WIDTH}
+          title={t('toolbar.allAssignees')}
+        />
       )}
 
       {/* Label Filter */}
       {cardSettings.showLabels && (
-      <select
+      <Select
         value={labelFilter}
-        onChange={(e) => setLabelFilter(e.target.value)}
-        className={selectClassName}
-      >
-        <option value="all">{t('toolbar.allLabels')}</option>
-        <option value="unlabeled">{t('toolbar.unlabeled')}</option>
-        {labels.length > 0 && (
-          <optgroup label={t('toolbar.labelsGroup')}>
-            {labels.map((l) => (
-              <option key={l} value={`label:${l}`}>
-                {l}
-              </option>
-            ))}
-          </optgroup>
-        )}
-      </select>
+        options={[
+          { value: 'all', label: t('toolbar.allLabels') },
+          { value: 'unlabeled', label: t('toolbar.unlabeled') },
+          ...labels.map((l) => ({ value: `label:${l}`, label: l, group: t('toolbar.labelsGroup') }))
+        ]}
+        onChange={setLabelFilter}
+        className={SELECT_WIDTH}
+        title={t('toolbar.allLabels')}
+      />
       )}
 
       {/* Due Date Filter */}
       {cardSettings.showDueDate && (
-        <select
+        <Select
           value={dueDateFilter}
-          onChange={(e) => setDueDateFilter(e.target.value as DueDateFilter)}
-          className={selectClassName}
-        >
-          {dueDateOptions.map((d) => (
-            <option key={d.value} value={d.value}>
-              {d.label}
-            </option>
-          ))}
-        </select>
+          options={dueDateOptions}
+          onChange={(v) => setDueDateFilter(v as DueDateFilter)}
+          className={SELECT_WIDTH}
+          title={t('toolbar.allDates')}
+        />
       )}
 
       {/* Clear Filters Button */}
