@@ -151,7 +151,7 @@ export class KanbanPanel {
             break
           }
           case 'openSettings':
-            vscode.commands.executeCommand('workbench.action.openSettings', '@ext:LachyFS.kanbanmd')
+            vscode.commands.executeCommand('workbench.action.openSettings', '@ext:testycool.kanbanmd')
             break
           case 'focusMenuBar':
             // Focus must leave the webview before focusMenuBar works (VS Code limitation).
