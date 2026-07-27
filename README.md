@@ -1,9 +1,12 @@
-# Kanban Board for Markdown Files
+# Plain Kanban
 
-A kanban board for VS Code where every task is a markdown file in your git
-repo. Drag cards between columns, set labels and priorities, search across
-everything. It all lives in plain markdown with YAML frontmatter that you can
-commit, diff and review, so there are no accounts and no external services.
+A lightweight kanban board for VS Code where every task is a plain markdown
+file in your git repo. Use it to hand work to Claude Code, Codex or Copilot and
+keep track of what is where.
+
+Drag cards between columns, set labels and priorities, search across
+everything. It all lives in markdown with YAML frontmatter that you can commit,
+diff and review. No accounts, no service, just files.
 
 Every colour, size, corner and shadow on the board comes from the VS Code theme
 you are running, so it looks like part of the editor rather than a web page
@@ -131,12 +134,12 @@ Default columns:
 
 ### VS Code Marketplace
 
-Search "Kanban Board for Markdown" in the Extensions view, or install
+Search "Plain Kanban" in the Extensions view, or install
 [testycool.kanbanmd](https://marketplace.visualstudio.com/items?itemName=testycool.kanbanmd).
 
 ### Open VSX, for VSCodium, Cursor and Windsurf
 
-Search "Kanban Board for Markdown" in the Extensions view, or install
+Search "Plain Kanban" in the Extensions view, or install
 [testycool/kanbanmd](https://open-vsx.org/extension/testycool/kanbanmd).
 
 ### From a VSIX file
