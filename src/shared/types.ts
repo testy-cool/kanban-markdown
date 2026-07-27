@@ -91,6 +91,8 @@ export interface CardDisplaySettings {
   fontSize: number
   /** Board font. Empty means follow the VS Code UI font. */
   fontFamily: string
+  /** How many lines of the card body to show before cutting it off. */
+  cardExcerptLines: number
 }
 
 // Messages between extension and webview

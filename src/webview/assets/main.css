@@ -78,6 +78,33 @@ html.hide-scrollbar::-webkit-scrollbar {
   background: var(--vscode-list-hoverBackground);
 }
 
+/* Card excerpt. The number of lines is a setting, so the clamp is set from the
+   component rather than by a Tailwind class, which only covers one to six. */
+.excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Marks inside an excerpt stay quiet. The excerpt is secondary text on a card,
+   so bold should read as slightly firmer rather than as a second heading. */
+.excerpt strong {
+  font-weight: 600;
+  color: var(--vscode-foreground);
+}
+
+.excerpt code {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 0.9em;
+  background-color: var(--vscode-textCodeBlock-background, rgba(127, 127, 127, 0.15));
+  padding: 0 0.25em;
+  border-radius: 2px;
+}
+
+.excerpt del {
+  opacity: 0.7;
+}
+
 /* Priority badges.
 
    These have to stay coloured, because red for critical only carries meaning

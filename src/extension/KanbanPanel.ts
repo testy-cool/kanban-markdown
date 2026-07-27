@@ -1166,7 +1166,8 @@ export class KanbanPanel {
       defaultPriority: config.get<Priority>('defaultPriority', 'medium'),
       defaultStatus: config.get<FeatureStatus>('defaultStatus', 'backlog'),
       fontSize: config.get<number>('fontSize', 0),
-      fontFamily: config.get<string>('fontFamily', '')
+      fontFamily: config.get<string>('fontFamily', ''),
+      cardExcerptLines: config.get<number>('cardExcerptLines', 4)
     }
 
     const collapsedColumns: string[] = this._context.workspaceState.get('kanbanmd.collapsedColumns', [])

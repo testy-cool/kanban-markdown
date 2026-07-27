@@ -2,6 +2,7 @@ import { Calendar, Check, FileText, Layers } from 'lucide-react'
 import { getTitleFromContent } from '../../shared/types'
 import type { Feature, Priority } from '../../shared/types'
 import { epicThemeFromName } from '../../shared/epicColor'
+import { renderInlineMarkdown, excerptFromContent } from '../lib/inlineMarkdown'
 import { useStore } from '../store'
 import { t } from '../lib/i18n'
 
@@ -27,23 +28,11 @@ function getPriorityLabels(): Record<Priority, string> {
   }
 }
 
-function getDescriptionFromContent(content: string): string {
-  // Remove the first # heading line, then grab the first non-empty text
-  const lines = content.split('\n')
-  const headingIndex = lines.findIndex(l => /^#\s+/.test(l))
-  const afterHeading = headingIndex >= 0 ? lines.slice(headingIndex + 1) : lines
-  const desc = afterHeading
-    .map(l => l.replace(/^#{1,6}\s+/, '').trim())
-    .filter(l => l.length > 0)
-    .join(' ')
-  return desc
-}
-
 export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) {
   const { cardSettings, locale, isDarkMode } = useStore()
   const priorityLabels = getPriorityLabels()
   const title = getTitleFromContent(feature.content)
-  const description = getDescriptionFromContent(feature.content)
+  const description = excerptFromContent(feature.content)
   const fileName = feature.filePath ? feature.filePath.split(/[/\\]/).pop() || '' : ''
 
   const formatDueDate = (dateStr: string | null) => {
@@ -129,9 +118,12 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
         </div>
 
         {/* Description */}
-        {description && !cardSettings.compactMode && (
-          <p className="text-xs text-fg-dim line-clamp-2 mb-2">
-            {description}
+        {description && !cardSettings.compactMode && cardSettings.cardExcerptLines > 0 && (
+          <p
+            className="excerpt text-xs text-fg-dim mb-2"
+            style={{ WebkitLineClamp: cardSettings.cardExcerptLines }}
+          >
+            {renderInlineMarkdown(description)}
           </p>
         )}
 
