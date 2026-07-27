@@ -64,6 +64,42 @@ html.hide-scrollbar::-webkit-scrollbar {
   background: var(--vscode-list-hoverBackground);
 }
 
+/* Priority badges.
+
+   These have to stay coloured, because red for critical only carries meaning
+   if it is red. They use the chart colours VS Code defines, which themes
+   override, so they follow the theme rather than fighting it. The background
+   is the same colour mixed down into whatever sits behind it, which keeps the
+   badge readable on a black theme and on a white one without needing two sets
+   of rules. */
+.badge-priority {
+  border: 1px solid transparent;
+}
+
+.badge-critical {
+  color: var(--vscode-charts-red, #f14c4c);
+  background-color: color-mix(in srgb, var(--vscode-charts-red, #f14c4c) 16%, transparent);
+  border-color: color-mix(in srgb, var(--vscode-charts-red, #f14c4c) 32%, transparent);
+}
+
+.badge-high {
+  color: var(--vscode-charts-orange, #d18616);
+  background-color: color-mix(in srgb, var(--vscode-charts-orange, #d18616) 16%, transparent);
+  border-color: color-mix(in srgb, var(--vscode-charts-orange, #d18616) 32%, transparent);
+}
+
+.badge-medium {
+  color: var(--vscode-charts-yellow, #cca700);
+  background-color: color-mix(in srgb, var(--vscode-charts-yellow, #cca700) 16%, transparent);
+  border-color: color-mix(in srgb, var(--vscode-charts-yellow, #cca700) 32%, transparent);
+}
+
+.badge-low {
+  color: var(--vscode-charts-green, #89d185);
+  background-color: color-mix(in srgb, var(--vscode-charts-green, #89d185) 16%, transparent);
+  border-color: color-mix(in srgb, var(--vscode-charts-green, #89d185) 32%, transparent);
+}
+
 /* Focus visible for accessibility */
 button:focus-visible,
 input:focus-visible {

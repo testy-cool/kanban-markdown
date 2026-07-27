@@ -26,7 +26,7 @@ function getDueDateOptions(): { value: DueDateFilter; label: string }[] {
 }
 
 const selectClassName =
-  'text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-600 rounded-md px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 text-zinc-900 dark:text-zinc-100'
+  'text-sm bg-input border border-input-line rounded focus:outline-none focus:ring-1 focus:ring-focus text-input-fg px-2 py-1.5'
 
 export function Toolbar({
   onOpenSettings,
@@ -66,19 +66,19 @@ export function Toolbar({
   const [labelManagerOpen, setLabelManagerOpen] = useState(false)
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 border-b border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/50 flex-wrap">
+    <div className="flex items-center gap-2 px-4 py-2 border-b border-line bg-column flex-wrap">
       {/* Search */}
       <div className="relative flex-1 min-w-[180px] max-w-xs">
         <Search
           size={14}
-          className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400"
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 text-fg-dim"
         />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('toolbar.search')}
-          className="w-full pl-8 pr-3 py-1.5 text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400"
+          className="w-full pl-8 pr-3 py-1.5 text-sm bg-input border border-input-line rounded focus:outline-none focus:ring-1 focus:ring-focus text-input-fg placeholder-input-ph"
         />
       </div>
 
@@ -154,7 +154,7 @@ export function Toolbar({
       {filtersActive && (
         <button
           onClick={clearAllFilters}
-          className="flex items-center gap-1 px-2 py-1.5 text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md transition-colors"
+          className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
           title={t('toolbar.clearAllFilters')}
         >
           <X size={14} />
@@ -165,7 +165,7 @@ export function Toolbar({
       {/* Layout Toggle */}
       <button
         onClick={toggleLayout}
-        className="flex items-center gap-1 px-2 py-1.5 text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md transition-colors"
+        className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
         title={layout === 'horizontal' ? t('toolbar.switchToVertical') : t('toolbar.switchToHorizontal')}
       >
         {layout === 'horizontal' ? <Rows size={16} /> : <Columns size={16} />}
@@ -177,8 +177,8 @@ export function Toolbar({
         onClick={() => onBoardViewModeChange(boardViewMode === 'standard' ? 'epic' : 'standard')}
         className={`flex items-center gap-1 px-2 py-1.5 text-sm rounded-md transition-colors ${
           boardViewMode === 'epic'
-            ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40'
-            : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800'
+            ? 'text-fg-strong bg-selected'
+            : 'text-fg-dim hover:text-fg hover:bg-hover'
         }`}
         title={boardViewMode === 'standard' ? t('toolbar.epicBoardView') : t('toolbar.standardBoardView')}
       >
@@ -190,7 +190,7 @@ export function Toolbar({
         <div className="relative">
           <button
             onClick={() => setLabelManagerOpen(!labelManagerOpen)}
-            className="flex items-center gap-1 px-2 py-1.5 text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md transition-colors"
+            className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
             title={t('toolbar.manageLabels')}
           >
             <Tags size={14} />
@@ -204,15 +204,15 @@ export function Toolbar({
       {/* Settings */}
       <button
         onClick={onOpenSettings}
-        className="flex items-center gap-1 px-2 py-1.5 text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md transition-colors"
+        className="flex items-center gap-1 px-2 py-1.5 text-sm text-fg-dim hover:text-fg hover:bg-hover rounded transition-colors"
         title={t('toolbar.openSettings')}
       >
         <Settings size={16} />
       </button>
 
       {/* Keyboard hint */}
-      <div className="ml-auto text-xs text-zinc-400">
-        {t('toolbar.pressKeyToAdd').split('{key}')[0]}<kbd className="px-1.5 py-0.5 bg-zinc-200 dark:bg-zinc-700 rounded">n</kbd>{t('toolbar.pressKeyToAdd').split('{key}')[1]}
+      <div className="ml-auto text-xs text-fg-dim">
+        {t('toolbar.pressKeyToAdd').split('{key}')[0]}<kbd className="px-1.5 py-0.5 bg-badge text-badge-fg rounded">n</kbd>{t('toolbar.pressKeyToAdd').split('{key}')[1]}
       </div>
     </div>
   )

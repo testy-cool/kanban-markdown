@@ -37,20 +37,20 @@ interface CreateFeatureDialogProps {
 
 function getPriorityConfig(): { value: Priority; label: string; dot: string }[] {
   return [
-    { value: 'critical', label: t('priority.critical'), dot: 'bg-red-500' },
-    { value: 'high', label: t('priority.high'), dot: 'bg-orange-500' },
-    { value: 'medium', label: t('priority.medium'), dot: 'bg-yellow-500' },
-    { value: 'low', label: t('priority.low'), dot: 'bg-green-500' }
+    { value: 'critical', label: t('priority.critical'), dot: 'bg-chart-red' },
+    { value: 'high', label: t('priority.high'), dot: 'bg-chart-orange' },
+    { value: 'medium', label: t('priority.medium'), dot: 'bg-chart-yellow' },
+    { value: 'low', label: t('priority.low'), dot: 'bg-chart-green' }
   ]
 }
 
 function getStatusConfig(): { value: FeatureStatus; label: string; dot: string }[] {
   return [
-    { value: 'backlog', label: t('status.backlog'), dot: 'bg-zinc-400' },
-    { value: 'todo', label: t('status.todo'), dot: 'bg-blue-400' },
-    { value: 'in-progress', label: t('status.inProgress'), dot: 'bg-amber-400' },
-    { value: 'review', label: t('status.review'), dot: 'bg-purple-400' },
-    { value: 'done', label: t('status.done'), dot: 'bg-emerald-400' }
+    { value: 'backlog', label: t('status.backlog'), dot: 'bg-fg-dim' },
+    { value: 'todo', label: t('status.todo'), dot: 'bg-chart-blue' },
+    { value: 'in-progress', label: t('status.inProgress'), dot: 'bg-chart-orange' },
+    { value: 'review', label: t('status.review'), dot: 'bg-chart-purple' },
+    { value: 'done', label: t('status.done'), dot: 'bg-chart-green' }
   ]
 }
 
@@ -194,7 +194,7 @@ function LabelInput({
                 e.stopPropagation()
                 onChange(labels.filter((l) => l !== label))
               }}
-              className="hover:text-red-500 transition-colors"
+              className="hover:text-chart-red transition-colors"
             >
               <X size={9} />
             </button>
@@ -326,7 +326,7 @@ function CreateFeatureDialogContent({
     content: '',
     editorProps: {
       attributes: {
-        class: 'prose prose-sm dark:prose-invert max-w-none focus:outline-none min-h-[200px]'
+        class: 'prose prose-sm max-w-none focus:outline-none min-h-[200px]'
       }
     }
   })

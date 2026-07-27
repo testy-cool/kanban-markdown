@@ -106,7 +106,7 @@ export function LabelManager({ onClose }: Readonly<LabelManagerProps>) {
       {/* Panel */}
       <div
         ref={panelRef}
-        className="absolute top-full right-0 mt-1 z-50 rounded-lg shadow-lg min-w-[260px] max-w-[340px] bg-white dark:bg-zinc-800"
+        className="absolute top-full right-0 mt-1 z-50 rounded shadow-lg min-w-[260px] max-w-[340px] bg-raised border border-line"
         style={{
           border: '1px solid var(--vscode-dropdown-border, var(--vscode-panel-border))',
         }}

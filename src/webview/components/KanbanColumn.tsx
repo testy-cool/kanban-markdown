@@ -62,65 +62,66 @@ export function KanbanColumn({
 
   return (
     <div
+      data-column-id={column.id}
       className={
         isVertical
-          ? "flex flex-col bg-zinc-100 dark:bg-zinc-800/50 rounded-lg"
-          : "flex-shrink-0 w-72 h-full flex flex-col bg-zinc-100 dark:bg-zinc-800/50 rounded-lg"
+          ? "flex flex-col bg-column rounded"
+          : "flex-shrink-0 w-72 h-full flex flex-col bg-column rounded"
       }
       onDragOver={onDragOver}
       onDrop={(e) => onDrop(e, column.id)}
     >
       {/* Column Header */}
-      <div className="flex items-center justify-between w-full px-3 py-2 border-b border-zinc-200 dark:border-zinc-700">
+      <div className="flex items-center justify-between w-full px-3 py-2 border-b border-line">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: column.color }} />
-          <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{column.name}</h3>
-          <span className="text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-700 px-1.5 py-0.5 rounded-full">
+          <h3 className="text-sm font-medium text-fg-strong">{column.name}</h3>
+          <span className="text-xs text-badge-fg bg-badge px-1.5 py-0.5 rounded-full">
             {features.length}
           </span>
         </div>
         <div className="flex items-center gap-0.5">
           <button
             onClick={onCollapse}
-            className="p-0.5 rounded hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+            className="p-0.5 rounded hover:bg-hover transition-colors cursor-pointer"
             title={t('column.collapse', { name: column.name })}
           >
-            <ChevronLeft size={16} className="text-zinc-500" />
+            <ChevronLeft size={16} className="text-fg-dim" />
           </button>
           <button
             onClick={() => onAddFeature(column.id)}
-            className="p-0.5 rounded hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+            className="p-0.5 rounded hover:bg-hover transition-colors cursor-pointer"
             title={t('column.addTo', { name: column.name })}
           >
-            <Plus size={16} className="text-zinc-500" />
+            <Plus size={16} className="text-fg-dim" />
           </button>
           <div ref={menuRef} className="relative flex">
             <button
               onClick={() => setMenuOpen((o) => !o)}
-              className="p-0.5 rounded hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+              className="p-0.5 rounded hover:bg-hover transition-colors cursor-pointer"
               title={t('column.options')}
             >
-              <MoreVertical size={16} className="text-zinc-500" />
+              <MoreVertical size={16} className="text-fg-dim" />
             </button>
             {menuOpen && (
-              <div className="absolute right-0 top-full mt-1 z-50 min-w-[200px] bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-md shadow-lg py-1">
+              <div className="absolute right-0 top-full mt-1 z-50 min-w-[200px] bg-raised border border-line rounded shadow-lg py-1">
                 <div
                   className={`relative ${features.length === 0 ? 'opacity-40 pointer-events-none' : ''}`}
                   onMouseEnter={() => setSubmenuOpen(true)}
                   onMouseLeave={() => setSubmenuOpen(false)}
                 >
                   <button
-                    className="w-full text-left px-3 py-1.5 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 flex items-center justify-between gap-2"
+                    className="w-full text-left px-3 py-1.5 text-sm text-fg hover:bg-hover flex items-center justify-between gap-2"
                   >
                     <span>{t('column.moveAllCards')}</span>
-                    <ChevronRight size={14} className="text-zinc-400 flex-shrink-0" />
+                    <ChevronRight size={14} className="text-fg-dim flex-shrink-0" />
                   </button>
                   {submenuOpen && (
-                    <div className="absolute left-full top-0 ml-0.5 z-50 min-w-[160px] bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-md shadow-lg py-1">
+                    <div className="absolute left-full top-0 ml-0.5 z-50 min-w-[160px] bg-raised border border-line rounded shadow-lg py-1">
                       {otherColumns.map((col) => (
                         <button
                           key={col.id}
-                          className="w-full text-left px-3 py-1.5 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 flex items-center gap-2"
+                          className="w-full text-left px-3 py-1.5 text-sm text-fg hover:bg-hover flex items-center gap-2"
                           onClick={() => { onMoveAllCards(col.id); setMenuOpen(false); setSubmenuOpen(false) }}
                         >
                           <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: col.color }} />
@@ -132,7 +133,7 @@ export function KanbanColumn({
                 </div>
                 {onArchiveAllCards && (
                   <button
-                    className={`w-full text-left px-3 py-1.5 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 ${features.length === 0 ? 'opacity-40 pointer-events-none' : ''}`}
+                    className={`w-full text-left px-3 py-1.5 text-sm text-fg hover:bg-hover ${features.length === 0 ? 'opacity-40 pointer-events-none' : ''}`}
                     onClick={() => { onArchiveAllCards(); setMenuOpen(false) }}
                   >
                     {t('column.archiveAllCards')}
@@ -156,7 +157,7 @@ export function KanbanColumn({
           <div key={feature.id}>
             {/* Drop indicator before this card */}
             {isDropTarget && dropTarget.index === index && (
-              <div className="h-0.5 bg-blue-500 rounded-full mx-1 mb-1" />
+              <div className="h-0.5 bg-focus rounded-full mx-1 mb-1" />
             )}
             <div
               draggable
@@ -174,11 +175,11 @@ export function KanbanColumn({
 
         {/* Drop indicator at end of list */}
         {isDropTarget && dropTarget.index === features.length && features.length > 0 && (
-          <div className="h-0.5 bg-blue-500 rounded-full mx-1" />
+          <div className="h-0.5 bg-focus rounded-full mx-1" />
         )}
 
         {features.length === 0 && (
-          <div className={isVertical ? "text-sm text-zinc-400 dark:text-zinc-500 py-4" : "text-center py-8 text-sm text-zinc-400 dark:text-zinc-500"}>
+          <div className={isVertical ? "text-sm text-fg-dim py-4" : "text-center py-8 text-sm text-fg-dim"}>
             {t('column.noFeatures')}
           </div>
         )}

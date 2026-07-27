@@ -5,9 +5,57 @@ export default {
   content: [
     "./src/webview/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
+      // Every colour here comes from the running VS Code theme, so the board
+      // matches whatever the user has selected instead of guessing at a light
+      // or a dark palette. Each one carries a fallback because a theme is
+      // allowed to leave any single colour unset.
+      colors: {
+        // Surfaces, darkest to lightest in a dark theme.
+        board: 'var(--vscode-editor-background, #1e1e1e)',
+        column: 'var(--vscode-sideBar-background, var(--vscode-editor-background, #1e1e1e))',
+        card: 'var(--vscode-editorWidget-background, #252526)',
+        raised: 'var(--vscode-dropdown-background, var(--vscode-editorWidget-background, #252526))',
+        hover: 'var(--vscode-list-hoverBackground, rgba(128, 128, 128, 0.15))',
+        selected: 'var(--vscode-list-activeSelectionBackground, rgba(128, 128, 128, 0.25))',
+        // Lines.
+        line: 'var(--vscode-widget-border, var(--vscode-panel-border, rgba(128, 128, 128, 0.35)))',
+        focus: 'var(--vscode-focusBorder, #007fd4)',
+        // Text.
+        fg: 'var(--vscode-foreground, #cccccc)',
+        'fg-strong': 'var(--vscode-editor-foreground, var(--vscode-foreground, #cccccc))',
+        'fg-dim': 'var(--vscode-descriptionForeground, rgba(204, 204, 204, 0.7))',
+        'fg-link': 'var(--vscode-textLink-foreground, #3794ff)',
+        // Inputs.
+        input: 'var(--vscode-input-background, #313131)',
+        'input-fg': 'var(--vscode-input-foreground, #cccccc)',
+        'input-line': 'var(--vscode-input-border, var(--vscode-widget-border, rgba(128, 128, 128, 0.35)))',
+        'input-ph': 'var(--vscode-input-placeholderForeground, rgba(204, 204, 204, 0.5))',
+        // Buttons.
+        btn: 'var(--vscode-button-background, #0078d4)',
+        'btn-fg': 'var(--vscode-button-foreground, #ffffff)',
+        'btn-hover': 'var(--vscode-button-hoverBackground, #026ec1)',
+        btn2: 'var(--vscode-button-secondaryBackground, rgba(128, 128, 128, 0.25))',
+        'btn2-fg': 'var(--vscode-button-secondaryForeground, var(--vscode-foreground, #cccccc))',
+        'btn2-hover': 'var(--vscode-button-secondaryHoverBackground, rgba(128, 128, 128, 0.35))',
+        // Accents. VS Code defines a chart palette and themes override it, so
+        // these stay meaningful without being fixed reds and greens.
+        'chart-red': 'var(--vscode-charts-red, #f14c4c)',
+        'chart-orange': 'var(--vscode-charts-orange, #d18616)',
+        'chart-yellow': 'var(--vscode-charts-yellow, #cca700)',
+        'chart-green': 'var(--vscode-charts-green, #89d185)',
+        'chart-blue': 'var(--vscode-charts-blue, #3794ff)',
+        'chart-purple': 'var(--vscode-charts-purple, #b180d7)',
+        // States.
+        danger: 'var(--vscode-errorForeground, #f14c4c)',
+        badge: 'var(--vscode-badge-background, rgba(128, 128, 128, 0.3))',
+        'badge-fg': 'var(--vscode-badge-foreground, #cccccc)',
+      },
+      fontFamily: {
+        sans: ['var(--vscode-font-family)', 'sans-serif'],
+        mono: ['var(--vscode-editor-font-family)', 'monospace'],
+      },
       typography: () => ({
         DEFAULT: {
           css: {

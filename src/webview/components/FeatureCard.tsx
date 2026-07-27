@@ -12,10 +12,10 @@ interface FeatureCardProps {
 }
 
 const priorityColors: Record<Priority, string> = {
-  critical: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-  high: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
-  medium: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-  low: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+  critical: 'badge-priority badge-critical',
+  high: 'badge-priority badge-high',
+  medium: 'badge-priority badge-medium',
+  low: 'badge-priority badge-low'
 }
 
 function getPriorityLabels(): Record<Priority, string> {
@@ -53,14 +53,14 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
     const diff = date.getTime() - now.getTime()
     const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
 
-    if (days < 0) return { text: t('card.overdue'), className: 'text-red-500' }
-    if (days === 0) return { text: t('card.today'), className: 'text-orange-500' }
-    if (days === 1) return { text: t('card.tomorrow'), className: 'text-yellow-600 dark:text-yellow-400' }
-    if (days <= 7) return { text: t('card.daysShort', { days }), className: 'text-zinc-500 dark:text-zinc-400' }
+    if (days < 0) return { text: t('card.overdue'), className: 'text-chart-red' }
+    if (days === 0) return { text: t('card.today'), className: 'text-chart-orange' }
+    if (days === 1) return { text: t('card.tomorrow'), className: 'text-chart-yellow' }
+    if (days <= 7) return { text: t('card.daysShort', { days }), className: 'text-fg-dim' }
 
     return {
       text: date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
-      className: 'text-zinc-500 dark:text-zinc-400'
+      className: 'text-fg-dim'
     }
   }
 
@@ -92,7 +92,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
   return (
     <div
       onClick={onClick}
-      className={`group relative flex flex-col bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 ${cardSettings.compactMode ? 'p-2 min-h-[4.5rem]' : 'p-3 min-h-[7rem]'} cursor-pointer hover:shadow-md transition-shadow ${
+      className={`group relative flex flex-col bg-card rounded border border-line ${cardSettings.compactMode ? 'p-2 min-h-[4.5rem]' : 'p-3 min-h-[7rem]'} cursor-pointer hover:bg-hover transition-colors ${
         isDragging ? 'shadow-lg opacity-90' : ''
       }`}
     >
@@ -101,8 +101,8 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
         {/* File Name + Priority badge row (when fileName enabled) */}
         {cardSettings.showFileName && fileName && (
           <div className="flex items-center gap-1.5 mb-1">
-            <FileText size={10} className="shrink-0 text-zinc-400 dark:text-zinc-500" />
-            <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 truncate flex-1">
+            <FileText size={10} className="shrink-0 text-fg-dim" />
+            <span className="text-[10px] font-mono text-fg-dim truncate flex-1">
               {fileName}
             </span>
             {cardSettings.showPriorityBadges && (
@@ -116,7 +116,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
         )}
 
         <div className={`flex items-start gap-2 ${description ? 'mb-1' : cardSettings.compactMode ? 'mb-1' : 'mb-2'}`}>
-          <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 line-clamp-2 flex-1">
+          <h3 className="text-sm font-medium text-fg-strong line-clamp-2 flex-1">
             {title}
           </h3>
           {cardSettings.showPriorityBadges && !(cardSettings.showFileName && fileName) && (
@@ -130,7 +130,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
 
         {/* Description */}
         {description && !cardSettings.compactMode && (
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 mb-2">
+          <p className="text-xs text-fg-dim line-clamp-2 mb-2">
             {description}
           </p>
         )}
@@ -151,13 +151,13 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
             {feature.labels.slice(0, 3).map((label) => (
               <span
                 key={label}
-                className="text-xs px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300"
+                className="text-xs px-1.5 py-0.5 rounded bg-badge text-badge-fg"
               >
                 {label}
               </span>
             ))}
             {feature.labels.length > 3 && (
-              <span className="text-xs text-zinc-400">+{feature.labels.length - 3}</span>
+              <span className="text-xs text-fg-dim">+{feature.labels.length - 3}</span>
             )}
           </div>
         )}
@@ -167,8 +167,8 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
       <div className="flex items-center justify-between text-xs mt-auto">
         <div className="flex items-center gap-1">
           {cardSettings.showAssignee && feature.assignee && feature.assignee !== 'null' && (
-            <div className="flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400">
-              <span className="shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold bg-zinc-200 dark:bg-zinc-600 text-zinc-700 dark:text-zinc-300">
+            <div className="flex items-center gap-1.5 text-fg-dim">
+              <span className="shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold bg-badge text-badge-fg">
                 {feature.assignee.split(/\s+/).map((w: string) => w[0]).join('').toUpperCase().slice(0, 2)}
               </span>
               <span>{feature.assignee}</span>
@@ -182,7 +182,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
           </div>
         )}
         {completedText && (
-          <div className="flex items-center gap-1" style={{ color: 'var(--vscode-descriptionForeground)' }}>
+          <div className="flex items-center gap-1 text-fg-dim">
             <Check size={12} />
             <span>{completedText}</span>
           </div>

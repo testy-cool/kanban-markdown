@@ -76,7 +76,7 @@ export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
           <span
             role="button"
             onClick={(e) => { e.stopPropagation(); onChange(''); setIsOpen(false) }}
-            className="ml-0.5 hover:text-red-500 transition-colors"
+            className="ml-0.5 hover:text-chart-red transition-colors"
           >
             <X size={12} />
           </span>

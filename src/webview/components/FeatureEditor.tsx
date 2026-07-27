@@ -74,18 +74,18 @@ const priorities: Priority[] = ['critical', 'high', 'medium', 'low']
 const statuses: FeatureStatus[] = ['backlog', 'todo', 'in-progress', 'review', 'done']
 
 const priorityDots: Record<Priority, string> = {
-  critical: 'bg-red-500',
-  high: 'bg-orange-500',
-  medium: 'bg-yellow-500',
-  low: 'bg-green-500'
+  critical: 'bg-chart-red',
+  high: 'bg-chart-orange',
+  medium: 'bg-chart-yellow',
+  low: 'bg-chart-green'
 }
 
 const statusDots: Record<FeatureStatus, string> = {
-  backlog: 'bg-zinc-400',
-  todo: 'bg-blue-400',
-  'in-progress': 'bg-amber-400',
-  review: 'bg-purple-400',
-  done: 'bg-emerald-400'
+  backlog: 'bg-fg-dim',
+  todo: 'bg-chart-blue',
+  'in-progress': 'bg-chart-orange',
+  review: 'bg-chart-purple',
+  done: 'bg-chart-green'
 }
 
 function getAiAgentTabs(): { agent: AIAgent; label: string; color: string; activeColor: string }[] {
@@ -93,25 +93,25 @@ function getAiAgentTabs(): { agent: AIAgent; label: string; color: string; activ
     {
       agent: 'claude',
       label: t('ai.claude'),
-      color: 'hover:bg-amber-100 dark:hover:bg-amber-900/30',
+      color: 'hover:bg-hover',
       activeColor: 'bg-amber-700 text-white'
     },
     {
       agent: 'codex',
       label: t('ai.codex'),
-      color: 'hover:bg-emerald-100 dark:hover:bg-emerald-900/30',
+      color: 'hover:bg-hover',
       activeColor: 'bg-emerald-500 text-white'
     },
     {
       agent: 'copilot',
       label: t('ai.copilot'),
-      color: 'hover:bg-sky-100 dark:hover:bg-sky-900/30',
+      color: 'hover:bg-hover',
       activeColor: 'bg-sky-600 text-white'
     },
     {
       agent: 'opencode',
       label: t('ai.opencode'),
-      color: 'hover:bg-slate-100 dark:hover:bg-slate-700/30',
+      color: 'hover:bg-hover',
       activeColor: 'bg-slate-500 text-white'
     }
   ]
@@ -343,7 +343,7 @@ function AIDropdown({ onSelect }: AIDropdownProps) {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-          <div className="absolute top-full right-0 mt-1 z-20 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-xl min-w-[260px] overflow-hidden">
+          <div className="absolute top-full right-0 mt-1 z-20 bg-raised border border-line rounded shadow-xl min-w-[260px] overflow-hidden">
             {/* Tabs */}
             <div className="flex">
               {aiAgentTabs.map((tab) => (
@@ -354,7 +354,7 @@ function AIDropdown({ onSelect }: AIDropdownProps) {
                     'flex-1 px-3 py-2.5 text-xs font-medium transition-all',
                     selectedTab === tab.agent
                       ? tab.activeColor
-                      : cn('text-zinc-600 dark:text-zinc-400', tab.color)
+                      : cn('text-fg-dim', tab.color)
                   )}
                 >
                   {tab.label}
@@ -370,12 +370,12 @@ function AIDropdown({ onSelect }: AIDropdownProps) {
                     onSelect(selectedTab, mode.permissionMode)
                     setIsOpen(false)
                   }}
-                  className="w-full text-left px-3 py-2.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700/50 transition-colors"
+                  className="w-full text-left px-3 py-2.5 rounded-md hover:bg-hover transition-colors"
                 >
-                  <div className="text-xs font-medium text-zinc-900 dark:text-zinc-100">
+                  <div className="text-xs font-medium text-fg-strong">
                     {mode.label}
                   </div>
-                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                  <div className="text-[10px] text-fg-dim mt-0.5">
                     {mode.description}
                   </div>
                 </button>
@@ -440,7 +440,7 @@ function LabelEditor({
           {label}
           <button
             onClick={() => removeLabel(label)}
-            className="hover:text-red-500 transition-colors"
+            className="hover:text-chart-red transition-colors"
           >
             <X size={9} />
           </button>
@@ -553,7 +553,7 @@ export function FeatureEditor({
     content: '',
     editorProps: {
       attributes: {
-        class: 'prose prose-sm dark:prose-invert max-w-none focus:outline-none min-h-[200px] p-4'
+        class: 'prose prose-sm max-w-none focus:outline-none min-h-[200px] p-4'
       }
     },
     onUpdate: ({ editor: ed }) => {

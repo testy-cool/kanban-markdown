@@ -127,8 +127,8 @@ describe('KanbanBoard — feature placement', () => {
     expect(screen.getByText('BacklogCard')).toBeInTheDocument()
     expect(screen.getByText('DoneCard')).toBeInTheDocument()
     // Both headings present but in different column DOM sections
-    const heading1 = screen.getByText('BacklogCard').closest('[class*="rounded-lg"]')
-    const heading2 = screen.getByText('DoneCard').closest('[class*="rounded-lg"]')
+    const heading1 = screen.getByText('BacklogCard').closest("[data-column-id]")
+    const heading2 = screen.getByText('DoneCard').closest("[data-column-id]")
     expect(heading1).not.toBe(heading2)
   })
 
@@ -239,7 +239,7 @@ describe('KanbanBoard — moveAllCards', () => {
     const { user } = setup()
 
     // Open the column options menu for Backlog
-    const backlogSection = screen.getByTitle('Collapse Backlog').closest('[class*="rounded-lg"]') as HTMLElement
+    const backlogSection = screen.getByTitle('Collapse Backlog').closest("[data-column-id]") as HTMLElement
     const menuBtn = within(backlogSection).getByTitle('Column options')
     await user.click(menuBtn)
 
@@ -265,7 +265,7 @@ describe('KanbanBoard — moveAllCards', () => {
     })
     const { user } = setup({ epicFilter: 'Payments' })
 
-    const backlogSection = screen.getByTitle('Collapse Backlog').closest('[class*="rounded-lg"]') as HTMLElement
+    const backlogSection = screen.getByTitle('Collapse Backlog').closest("[data-column-id]") as HTMLElement
     const menuBtn = within(backlogSection).getByTitle('Column options')
     await user.click(menuBtn)
 
@@ -296,7 +296,7 @@ describe('KanbanBoard — archiveAllCards', () => {
     const { user } = setup()
 
     // Open the column options menu for Done
-    const doneSection = screen.getByTitle('Collapse Done').closest('[class*="rounded-lg"]') as HTMLElement
+    const doneSection = screen.getByTitle('Collapse Done').closest("[data-column-id]") as HTMLElement
     const menuBtn = within(doneSection).getByTitle('Column options')
     await user.click(menuBtn)
 
@@ -315,7 +315,7 @@ describe('KanbanBoard — archiveAllCards', () => {
     })
     const { user } = setup()
 
-    const backlogSection = screen.getByTitle('Collapse Backlog').closest('[class*="rounded-lg"]') as HTMLElement
+    const backlogSection = screen.getByTitle('Collapse Backlog').closest("[data-column-id]") as HTMLElement
     const menuBtn = within(backlogSection).getByTitle('Column options')
     await user.click(menuBtn)
 

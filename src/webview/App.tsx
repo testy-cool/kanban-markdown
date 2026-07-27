@@ -171,14 +171,14 @@ function App(): React.JSX.Element {
   // Listen for VSCode theme changes
   useEffect(() => {
     const updateTheme = () => {
-      const isDark = document.body.classList.contains('vscode-dark') ||
-                     document.body.classList.contains('vscode-high-contrast')
-      setIsDarkMode(isDark)
-      if (isDark) {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
+      // The board's own colours come from VS Code theme variables, so nothing
+      // here needs a light or dark class any more. This flag survives only for
+      // epic lane colours, which are generated and need to know how much
+      // contrast they have to work against.
+      setIsDarkMode(
+        document.body.classList.contains('vscode-dark') ||
+        document.body.classList.contains('vscode-high-contrast')
+      )
     }
 
     updateTheme()

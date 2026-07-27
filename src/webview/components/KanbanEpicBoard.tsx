@@ -71,8 +71,8 @@ export function KanbanEpicBoard({ onFeatureClick, onAddFeature, onMoveFeature }:
           <section
             key={laneKey}
             className={cn(
-              'rounded-lg overflow-hidden bg-zinc-50/50 dark:bg-zinc-900/30',
-              !laneEpic && 'border border-zinc-200 dark:border-zinc-700'
+              'rounded overflow-hidden bg-column',
+              !laneEpic && 'border border-line'
             )}
             style={
               laneTheme
@@ -87,23 +87,23 @@ export function KanbanEpicBoard({ onFeatureClick, onAddFeature, onMoveFeature }:
             <button
               type="button"
               onClick={() => handleToggleEpic(laneKey)}
-              className="w-full flex items-center gap-2 px-3 py-2 text-left transition-colors hover:bg-zinc-100/80 dark:hover:bg-zinc-800/60"
+              className="w-full flex items-center gap-2 px-3 py-2 text-left transition-colors hover:bg-hover"
             >
               {collapsed ? (
                 <ChevronRight
                   size={16}
-                  className={laneTheme ? undefined : 'text-zinc-500 dark:text-zinc-400'}
+                  className={laneTheme ? undefined : 'text-fg-dim'}
                   style={laneTheme ? { color: laneTheme.foreground } : undefined}
                 />
               ) : (
                 <ChevronDown
                   size={16}
-                  className={laneTheme ? undefined : 'text-zinc-500 dark:text-zinc-400'}
+                  className={laneTheme ? undefined : 'text-fg-dim'}
                   style={laneTheme ? { color: laneTheme.foreground } : undefined}
                 />
               )}
               <span
-                className={cn('text-sm font-semibold', !laneTheme && 'text-zinc-900 dark:text-zinc-100')}
+                className={cn('text-sm font-semibold', !laneTheme && 'text-fg-strong')}
                 style={laneTheme ? { color: laneTheme.foreground } : undefined}
               >
                 {title}
@@ -156,15 +156,15 @@ function CollapsedEpicSummary({
 }) {
   return (
     <div
-      className={cn('px-3 py-2 flex flex-wrap gap-x-3 gap-y-1 border-t', !accentBorder && 'border-zinc-200 dark:border-zinc-700')}
+      className={cn('px-3 py-2 flex flex-wrap gap-x-3 gap-y-1 border-t', !accentBorder && 'border-line')}
       style={accentBorder ? { borderTopColor: accentBorder } : undefined}
     >
       {columns.map((col) => {
         const n = getFilteredFeaturesByStatus(col.id as FeatureStatus, laneEpic).length
         return (
-          <span key={col.id} className="inline-flex items-center gap-1 text-xs text-zinc-600 dark:text-zinc-400">
+          <span key={col.id} className="inline-flex items-center gap-1 text-xs text-fg-dim">
             <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: col.color }} />
-            <span className="font-medium text-zinc-700 dark:text-zinc-300">{col.name}</span>
+            <span className="font-medium text-fg">{col.name}</span>
             <span className="tabular-nums">{n}</span>
           </span>
         )
