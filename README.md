@@ -1,39 +1,40 @@
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/LachyFS/kanban-markdown-vscode-extension/main/resources/icon.png" alt="Kanban Markdown" width="60" />
-
 # Kanban Markdown
 
-*"Now your backlog can have merge conflicts too."*
+A kanban board for VS Code, where every card is a markdown file with YAML
+frontmatter in your own repo. No accounts and no external services.
 
-**An agent native kanban board for VS Code, backed by markdown files.**
+## Where this came from
 
-[![VS Marketplace](https://img.shields.io/visual-studio-marketplace/v/LachyFS.kanban-markdown?label=VS%20Marketplace&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=LachyFS.kanban-markdown)
-[![Open VSX](https://img.shields.io/open-vsx/v/LachyFS/kanban-markdown?label=Open%20VSX&logo=vscodium)](https://open-vsx.org/extension/LachyFS/kanban-markdown)
-[![Open VSX Downloads](https://img.shields.io/open-vsx/dt/LachyFS/kanban-markdown?label=Downloads&logo=vscodium)](https://open-vsx.org/extension/LachyFS/kanban-markdown)
-[![GitHub Stars](https://img.shields.io/github/stars/LachyFS/kanban-markdown-vscode-extension?style=flat&logo=github)](https://github.com/LachyFS/kanban-markdown-vscode-extension)
-[![CI](https://img.shields.io/github/actions/workflow/status/LachyFS/kanban-markdown-vscode-extension/ci.yml?label=CI&logo=github)](https://github.com/LachyFS/kanban-markdown-vscode-extension/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+This is a fork of
+[LachyFS/kanban-markdown-vscode-extension](https://github.com/LachyFS/kanban-markdown-vscode-extension),
+taken at version 1.14.1 and MIT licensed. The original work is his and the
+`LICENSE` file is unchanged. This fork is maintained separately and does not
+merge from upstream.
 
-[![Claude Code](https://img.shields.io/badge/Claude_Code-supported-f97316?logo=anthropic&logoColor=white)](https://docs.anthropic.com/en/docs/claude-code)
-[![Codex](https://img.shields.io/badge/Codex-supported-10a37f?logo=openai&logoColor=white)](https://github.com/openai/codex)
-[![GitHub Copilot](https://img.shields.io/badge/Copilot-supported-2b6cb0?logo=githubcopilot&logoColor=white)](https://github.com/features/copilot)
-[![OpenCode](https://img.shields.io/badge/OpenCode-supported-64748b)](https://github.com/opencode-ai/opencode)
-[![skills.sh](https://img.shields.io/badge/skills.sh-compatible-a855f7)](https://skills.sh)
+Two things are being changed here. The board now takes its colours from the
+running VS Code theme instead of a fixed set of greys, and the card editor loads
+only when you open a card instead of on every board load. See
+`docs/superpowers/specs/` for the reasoning and the measurements.
 
-<img src="https://raw.githubusercontent.com/LachyFS/kanban-markdown-vscode-extension/main/docs/images/editor-view.png" alt="Editor View" width="800" />
+The extension is `testycool.kanbanmd`, so its settings and commands are all
+prefixed `kanbanmd.` and it can be installed alongside the original without
+either one breaking.
 
-</div>
+This fork is not published to any marketplace. The icon in `resources/` is still
+upstream's and has to be replaced before it ever could be.
 
----
+## Install
 
-Features are stored as markdown files with YAML frontmatter — version-controllable, diffable, and editable outside the extension. No accounts, no external services.
+Build it and install the package.
 
-## Quick Start
+```
+pnpm install
+pnpm run package
+code --install-extension releases/kanbanmd-<version>.vsix
+```
 
-1. **Install** — search "Kanban Markdown" in the Extensions view ([VS Marketplace](https://marketplace.visualstudio.com/items?itemName=LachyFS.kanban-markdown) / [Open VSX](https://open-vsx.org/extension/LachyFS/kanban-markdown))
-2. **Open** — run `Open Kanban Board` from the command palette (`Cmd+Shift+P` / `Ctrl+Shift+P`)
-3. **Create** — press `N` to add your first feature card
+Then run `Open Kanban Board` from the command palette, and press `N` to add your
+first card.
 
 ## Features
 
