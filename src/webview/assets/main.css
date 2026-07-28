@@ -111,6 +111,9 @@ html.hide-scrollbar::-webkit-scrollbar {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  /* The excerpt carries its own line breaks between blocks, and long lines
+     still need to wrap, which is what pre-wrap gives. */
+  white-space: pre-wrap;
 }
 
 /* Marks inside an excerpt stay quiet. The excerpt is secondary text on a card,

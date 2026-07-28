@@ -76,26 +76,73 @@ function render(text: string, keyPrefix: string): ReactNode[] {
 }
 
 /**
- * Turns the body of a card into one run of text for the excerpt.
+ * Turns the body of a card into the text shown on it.
  *
- * The title heading is dropped, since the card already shows it. Block markers
- * are stripped because a bullet or a fence means nothing once the lines are
- * joined together, but the words inside them are kept.
+ * The title heading is dropped, since the card already shows it. Line breaks
+ * follow markdown rather than the source file, so a paragraph typed across
+ * several lines stays one line, while anything that starts a new block gets its
+ * own. Lines inside a fenced code block are kept as they were typed, because
+ * joining code together would be wrong.
+ *
+ * Block markers themselves are removed. Once a list item is on its own line the
+ * dash in front of it adds nothing.
  */
 export function excerptFromContent(content: string): string {
   const lines = content.split('\n')
   const headingIndex = lines.findIndex(l => /^#\s+/.test(l))
   const body = headingIndex >= 0 ? lines.slice(headingIndex + 1) : lines
 
-  return body
-    .filter(l => !/^\s*```/.test(l))          // fence lines carry no words
-    .filter(l => !/^\s*\|?\s*[-:| ]+\|/.test(l)) // table rules are punctuation
-    .map(l => l
-      .replace(/^\s*#{1,6}\s+/, '')            // heading marks
-      .replace(/^\s*>\s?/, '')                 // quote marks
-      .replace(/^\s*[-*+]\s+/, '')             // bullets
-      .replace(/^\s*\d+\.\s+/, '')             // numbers
-      .trim())
-    .filter(l => l.length > 0)
-    .join(' ')
+  const out: string[] = []
+  let paragraph: string[] = []
+  let inFence = false
+
+  const endParagraph = () => {
+    if (paragraph.length > 0) {
+      out.push(paragraph.join(' '))
+      paragraph = []
+    }
+  }
+
+  for (const raw of body) {
+    if (/^\s*```/.test(raw)) {
+      endParagraph()
+      inFence = !inFence
+      continue
+    }
+
+    if (inFence) {
+      if (raw.trim()) out.push(raw.trim())
+      continue
+    }
+
+    // The row of dashes under a table header is punctuation, not words.
+    if (/^\s*\|?\s*[-:| ]+\|/.test(raw)) continue
+
+    const line = raw.trim()
+    if (!line) {
+      endParagraph()
+      continue
+    }
+
+    if (STARTS_A_BLOCK.test(line)) {
+      endParagraph()
+      out.push(stripBlockMarker(line))
+      continue
+    }
+
+    paragraph.push(line)
+  }
+
+  endParagraph()
+  return out.join('\n')
+}
+
+const STARTS_A_BLOCK = /^(#{1,6}\s+|[-*+]\s+|\d+\.\s+|>\s?|\|)/
+
+function stripBlockMarker(line: string): string {
+  return line
+    .replace(/^#{1,6}\s+/, '')
+    .replace(/^[-*+]\s+/, '')
+    .replace(/^\d+\.\s+/, '')
+    .replace(/^>\s?/, '')
 }

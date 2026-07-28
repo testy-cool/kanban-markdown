@@ -105,7 +105,7 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
         )}
 
         <div className={`flex items-start gap-2 ${description ? 'mb-1' : cardSettings.compactMode ? 'mb-1' : 'mb-2'}`}>
-          <h3 className="card-title font-medium text-fg-strong line-clamp-2 flex-1">
+          <h3 className="card-title font-medium text-fg-strong flex-1">
             {title}
           </h3>
           {cardSettings.showPriorityBadges && !(cardSettings.showFileName && fileName) && (

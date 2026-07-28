@@ -73,18 +73,38 @@ describe('excerptFromContent', () => {
     expect(excerptFromContent('No heading here.\nSecond line.')).toBe('No heading here. Second line.')
   })
 
-  it('strips bullets, numbers, quotes and lower headings but keeps their words', () => {
+  it('gives every block its own line and strips its marker', () => {
     const content = '# T\n## Sub\n- one\n* two\n1. three\n> quoted'
-    expect(excerptFromContent(content)).toBe('Sub one two three quoted')
+    expect(excerptFromContent(content)).toBe('Sub\none\ntwo\nthree\nquoted')
+  })
+
+  it('keeps a paragraph typed across several lines as one line', () => {
+    expect(excerptFromContent('# T\nA sentence that\nwas wrapped by the editor.'))
+      .toBe('A sentence that was wrapped by the editor.')
+  })
+
+  it('separates paragraphs with a line break', () => {
+    expect(excerptFromContent('# T\nFirst one.\n\nSecond one.'))
+      .toBe('First one.\nSecond one.')
   })
 
   it('drops code fence lines but keeps the code inside them', () => {
     expect(excerptFromContent('# T\n```bash\nnpm test\n```')).toBe('npm test')
   })
 
-  it('drops the dashes under a table header', () => {
+  it('keeps each line of a code block on its own line', () => {
+    expect(excerptFromContent('# T\n```\nfirst\nsecond\n```'))
+      .toBe('first\nsecond')
+  })
+
+  it('does not join a paragraph across a code block', () => {
+    expect(excerptFromContent('# T\nBefore.\n```\ncode\n```\nAfter.'))
+      .toBe('Before.\ncode\nAfter.')
+  })
+
+  it('gives each table row its own line and drops the dashes', () => {
     const content = '# T\n| a | b |\n| --- | --- |\n| 1 | 2 |'
-    expect(excerptFromContent(content)).toBe('| a | b | | 1 | 2 |')
+    expect(excerptFromContent(content)).toBe('| a | b |\n| 1 | 2 |')
   })
 
   it('returns an empty string for a card that is only a title', () => {
