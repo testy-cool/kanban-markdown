@@ -1,16 +1,31 @@
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useRef, useCallback, lazy, Suspense } from 'react'
 import { generateKeyBetween } from 'fractional-indexing'
 import { useStore } from './store'
 import { KanbanBoard } from './components/KanbanBoard'
 import { KanbanEpicBoard } from './components/KanbanEpicBoard'
-import { CreateFeatureDialog } from './components/CreateFeatureDialog'
-import { FeatureEditor } from './components/FeatureEditor'
 import { Toolbar } from './components/Toolbar'
 import { UndoToast } from './components/UndoToast'
 import type { Feature, FeatureStatus, Priority, ExtensionMessage, FeatureFrontmatter, AIAgent, AIPermissionMode, BoardViewMode } from '../shared/types'
 import { getTitleFromContent } from '../shared/types'
 import { vscode } from './vscodeApi'
 import { initLocale, t } from './lib/i18n'
+
+// The rich text editor and everything under it is roughly three quarters of the
+// webview, and none of it is needed to look at a board. Both of these mount
+// only when you open a card or the create dialog, so loading them at that
+// moment keeps the board itself small. Once loaded the browser keeps them for
+// the rest of the session.
+const CreateFeatureDialog = lazy(() =>
+  import('./components/CreateFeatureDialog').then(m => ({ default: m.CreateFeatureDialog }))
+)
+const FeatureEditor = lazy(() =>
+  import('./components/FeatureEditor').then(m => ({ default: m.FeatureEditor }))
+)
+
+/** Holds the editor's place while its code arrives. */
+function EditorLoading() {
+  return <div className="h-full bg-card border-l border-line" />
+}
 
 function App(): React.JSX.Element {
 
@@ -415,6 +430,7 @@ function App(): React.JSX.Element {
         </div>
         {editingFeature && (
           <div className="w-1/2">
+            <Suspense fallback={<EditorLoading />}>
             <FeatureEditor
               featureId={editingFeature.id}
               content={editingFeature.content}
@@ -426,16 +442,21 @@ function App(): React.JSX.Element {
               onOpenFile={handleOpenFile}
               onStartWithAI={handleStartWithAI}
             />
+            </Suspense>
           </div>
         )}
       </div>
 
-      <CreateFeatureDialog
-        isOpen={createFeatureOpen}
-        onClose={() => setCreateFeatureOpen(false)}
-        onCreate={handleCreateFeature}
-        initialStatus={createFeatureStatus}
-      />
+      {createFeatureOpen && (
+        <Suspense fallback={null}>
+          <CreateFeatureDialog
+            isOpen
+            onClose={() => setCreateFeatureOpen(false)}
+            onCreate={handleCreateFeature}
+            initialStatus={createFeatureStatus}
+          />
+        </Suspense>
+      )}
 
       {pendingDeletes.map((entry, i) => (
         <UndoToast
