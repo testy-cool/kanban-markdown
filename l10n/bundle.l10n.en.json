@@ -4,31 +4,26 @@
   "status.inProgress": "In Progress",
   "status.review": "Review",
   "status.done": "Done",
-
   "status.backlog.description": "Not yet planned",
   "status.todo.description": "Planned for development",
   "status.inProgress.description": "Currently being worked on",
   "status.review.description": "Ready for review",
   "status.done.description": "Completed",
-
   "priority.critical": "Critical",
   "priority.high": "High",
   "priority.medium": "Medium",
   "priority.low": "Low",
   "priority.mediumShort": "Med",
-
   "priority.critical.description": "Urgent, needs immediate attention",
   "priority.high.description": "Important, should be done soon",
   "priority.medium.description": "Normal priority",
   "priority.low.description": "Nice to have, can wait",
-
   "property.status": "Status",
   "property.priority": "Priority",
   "property.assignee": "Assignee",
   "property.dueDate": "Due date",
   "property.labels": "Labels",
   "property.epic": "Epic",
-
   "editor.buildWithAI": "Build with AI",
   "editor.delete": "DELETE",
   "editor.open": "OPEN",
@@ -41,13 +36,11 @@
   "editor.addLabels": "Add labels...",
   "editor.noAssignee": "No assignee",
   "editor.noEpic": "No epic",
-
   "create.title": "Create Feature",
   "create.featureTitle": "Feature title...",
   "create.addDescription": "Add a description...",
   "create.autoSaves": "Auto-saves on close",
   "create.saveAndClose": "to save & close",
-
   "toolbar.search": "Search features...",
   "toolbar.allPriorities": "All Priorities",
   "toolbar.allAssignees": "All Assignees",
@@ -69,7 +62,6 @@
   "toolbar.manageLabels": "Manage labels",
   "toolbar.openSettings": "Open settings",
   "toolbar.pressKeyToAdd": "Press {key} to add",
-
   "date.day.mo": "Mo",
   "date.day.tu": "Tu",
   "date.day.we": "We",
@@ -91,7 +83,6 @@
   "date.month.december": "December",
   "date.dueDate": "Due date",
   "date.today": "Today",
-
   "card.overdue": "Overdue",
   "card.today": "Today",
   "card.tomorrow": "Tomorrow",
@@ -103,17 +94,14 @@
   "card.daysAgo": "{count}d ago",
   "card.monthsAgo": "{count}mo ago",
   "card.yearsAgo": "{count}y ago",
-
   "column.collapse": "Collapse {name}",
   "column.addTo": "Add to {name}",
   "column.options": "Column options",
   "column.moveAllCards": "Move all cards in this list",
   "column.archiveAllCards": "Archive all cards in this list",
   "column.noFeatures": "No features",
-
   "epic.noEpic": "No epic",
   "epic.emptyHint": "Assign an epic on a ticket to see swim lanes here.",
-
   "labels.manage": "Manage Labels",
   "labels.confirmRename": "Confirm rename",
   "labels.cancel": "Cancel",
@@ -121,15 +109,11 @@
   "labels.usedOnMany": "Used on {count} cards",
   "labels.renameLabel": "Rename label",
   "labels.deleteLabel": "Delete label",
-
   "quickAdd.addFeature": "Add feature",
   "quickAdd.featureTitle": "Feature title...",
-
   "undo.undo": "Undo",
-
   "app.loading": "Loading...",
   "app.deleted": "Deleted \"{title}\"",
-
   "ai.claude": "Claude",
   "ai.codex": "Codex",
   "ai.copilot": "Copilot",
@@ -148,7 +132,6 @@
   "ai.mode.codex.fullAuto.description": "Full automation",
   "ai.mode.copilot.default.description": "Standard mode",
   "ai.mode.opencode.default.description": "Standard mode",
-
   "ext.noWorkspace": "No workspace folder open",
   "ext.featureTitle": "Feature title",
   "ext.featureTitlePlaceholder": "Enter a title for the new feature",
@@ -157,7 +140,6 @@
   "ext.descriptionOptional": "Description (optional)",
   "ext.descriptionPlaceholder": "Enter a description for the feature",
   "ext.createdFeature": "Created feature: {title}",
-
   "panel.title": "Kanban Board",
   "panel.noWorkspace": "No workspace folder open",
   "panel.deleteFailed": "Failed to delete feature: {error}",
@@ -179,10 +161,18 @@
   "panel.languageChanged": "Kanban Markdown: language changed. Update column names to match?",
   "panel.updateColumns": "Update columns",
   "panel.keepColumns": "Keep current",
-
   "sidebar.openBoard": "Open Board",
   "sidebar.newFeature": "New Feature",
   "sidebar.overview": "Overview",
   "sidebar.total": "{count} total",
-  "sidebar.inProgress": "In Progress"
+  "sidebar.inProgress": "In Progress",
+  "clarify.noSnapshot": "There is no saved earlier version of this card to compare against yet.",
+  "clarify.pending": "Clarifying",
+  "clarify.working": "Clarifying now",
+  "clarify.answered": "Clarified",
+  "clarify.compare": "Compare with the version before",
+  "clarify.dismiss": "Dismiss this clarification",
+  "clarify.ask": "Ask about this",
+  "clarify.askPlaceholder": "What do you want cleared up?",
+  "clarify.submit": "Ask"
 }

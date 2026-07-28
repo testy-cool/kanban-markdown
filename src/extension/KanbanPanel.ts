@@ -6,6 +6,8 @@ import { getTitleFromContent, generateFeatureFilename } from '../shared/types'
 import type { Feature, FeatureStatus, Priority, KanbanColumn, FeatureFrontmatter, CardDisplaySettings, FilenamePattern, AIAgent, AIPermissionMode, BoardViewMode } from '../shared/types'
 import { ensureStatusSubfolders, moveFeatureFile, getFeatureFilePath, getStatusFromPath, fileExists } from './featureFileUtils'
 import { buildAgentInstructions, GENERATED_MARKER } from './agentInstructions'
+import { clarificationsFileName, parseClarifications, serializeClarifications, newClarification } from '../shared/clarifications'
+import type { CardClarifications } from '../shared/types'
 import { parseFeatureFile, serializeFeature } from '../shared/featureFrontmatter'
 import { featureMatchesEpicLane } from '../shared/epicLane'
 import { t, getBundle, getEffectiveLocale, reloadBundle, getAllDefaultColumnNames, getDefaultColumnNamesForLocale } from './l10n'
@@ -110,6 +112,8 @@ export class KanbanPanel {
             // change never turns into another write.
             const dir = this._getWorkspaceFeaturesDir()
             if (dir) await this._writeAgentInstructions(dir)
+            this._setupClarifyWatcher()
+            await this._sendClarifications()
             break
           }
           case 'createFeature': {
@@ -199,6 +203,15 @@ export class KanbanPanel {
             break
           case 'renameLabel':
             await this._renameLabel(message.oldName, message.newName)
+            break
+          case 'askClarification':
+            await this._askClarification(message.featureId, message.quote, message.occurrence, message.question)
+            break
+          case 'dismissClarification':
+            await this._dismissClarification(message.featureId, message.clarificationId)
+            break
+          case 'openClarificationDiff':
+            await this._openClarificationDiff(message.featureId, message.clarificationId)
             break
           case 'deleteLabel':
             await this._deleteLabel(message.labelName)
@@ -376,6 +389,136 @@ export class KanbanPanel {
    * generated one. Once somebody edits it the marker goes and we leave it alone
    * rather than overwriting their words.
    */
+  // ----- Clarifications -------------------------------------------------
+  //
+  // A question you asked about a passage of a card. The extension writes them
+  // and shows them; a watching agent answers them. They sit in a hidden folder
+  // beside the cards so the board's own file watcher never sees them as cards.
+
+  private _clarifications: Record<string, CardClarifications> = {}
+  private _clarifyWatcher: vscode.FileSystemWatcher | undefined
+
+  private _getClarifyDir(): string | null {
+    const featuresDir = this._getWorkspaceFeaturesDir()
+    return featuresDir ? path.join(featuresDir, '.clarify') : null
+  }
+
+  private async _readClarifications(cardId: string): Promise<CardClarifications> {
+    const dir = this._getClarifyDir()
+    if (!dir) return { cardId, requests: [] }
+    const file = vscode.Uri.file(path.join(dir, clarificationsFileName(cardId)))
+    try {
+      return parseClarifications(new TextDecoder().decode(await vscode.workspace.fs.readFile(file)), cardId)
+    } catch {
+      return { cardId, requests: [] }
+    }
+  }
+
+  private async _writeClarifications(value: CardClarifications): Promise<void> {
+    const dir = this._getClarifyDir()
+    if (!dir) return
+    await vscode.workspace.fs.createDirectory(vscode.Uri.file(dir))
+    await vscode.workspace.fs.writeFile(
+      vscode.Uri.file(path.join(dir, clarificationsFileName(value.cardId))),
+      new TextEncoder().encode(serializeClarifications(value))
+    )
+  }
+
+  /** Everything the board needs to draw its chips, keyed by card id. */
+  private async _loadAllClarifications(): Promise<Record<string, CardClarifications>> {
+    const dir = this._getClarifyDir()
+    const out: Record<string, CardClarifications> = {}
+    if (!dir) return out
+    let entries: [string, vscode.FileType][]
+    try {
+      entries = await vscode.workspace.fs.readDirectory(vscode.Uri.file(dir))
+    } catch {
+      return out
+    }
+    for (const [name, kind] of entries) {
+      if (kind !== vscode.FileType.File || !name.endsWith('.json')) continue
+      const cardId = name.slice(0, -'.json'.length)
+      const value = await this._readClarifications(cardId)
+      if (value.requests.length > 0) out[value.cardId] = value
+    }
+    return out
+  }
+
+  private async _sendClarifications(): Promise<void> {
+    this._clarifications = await this._loadAllClarifications()
+    this._panel.webview.postMessage({
+      type: 'clarificationsUpdated',
+      clarifications: this._clarifications
+    })
+  }
+
+  /**
+   * Watches the sidecar folder so an answer written by an agent shows up on the
+   * board without anyone reloading. Separate from the card watcher because that
+   * one only looks at markdown, and these are json.
+   */
+  private _setupClarifyWatcher(): void {
+    this._clarifyWatcher?.dispose()
+    const dir = this._getClarifyDir()
+    if (!dir) return
+
+    this._clarifyWatcher = vscode.workspace.createFileSystemWatcher(
+      new vscode.RelativePattern(dir, '*.json')
+    )
+    let timer: NodeJS.Timeout | undefined
+    const onChange = () => {
+      if (timer) clearTimeout(timer)
+      timer = setTimeout(() => { void this._sendClarifications() }, 150)
+    }
+    this._clarifyWatcher.onDidChange(onChange, null, this._disposables)
+    this._clarifyWatcher.onDidCreate(onChange, null, this._disposables)
+    this._clarifyWatcher.onDidDelete(onChange, null, this._disposables)
+    this._disposables.push(this._clarifyWatcher)
+  }
+
+  private async _askClarification(featureId: string, quote: string, occurrence: number, question: string): Promise<void> {
+    const value = await this._readClarifications(featureId)
+    value.requests.push(newClarification(quote, question, occurrence))
+    await this._writeClarifications(value)
+    await this._sendClarifications()
+  }
+
+  private async _dismissClarification(featureId: string, clarificationId: string): Promise<void> {
+    const value = await this._readClarifications(featureId)
+    value.requests = value.requests.filter(r => r.id !== clarificationId)
+    await this._writeClarifications(value)
+    await this._sendClarifications()
+  }
+
+  /**
+   * Opens VS Code's own diff between the card as it was before an answer and
+   * the card now, which is the whole point of the snapshot the watcher takes.
+   */
+  private async _openClarificationDiff(featureId: string, clarificationId: string): Promise<void> {
+    const featuresDir = this._getWorkspaceFeaturesDir()
+    const value = await this._readClarifications(featureId)
+    const request = value.requests.find(r => r.id === clarificationId)
+    if (!featuresDir || !request?.snapshotPath) {
+      vscode.window.showInformationMessage(t('clarify.noSnapshot'))
+      return
+    }
+    const feature = this._features.find(f => f.id === featureId)
+    if (!feature) return
+
+    const before = vscode.Uri.file(path.join(featuresDir, request.snapshotPath))
+    const after = vscode.Uri.file(feature.filePath)
+    try {
+      await vscode.workspace.fs.stat(before)
+    } catch {
+      vscode.window.showInformationMessage(t('clarify.noSnapshot'))
+      return
+    }
+    await vscode.commands.executeCommand(
+      'vscode.diff', before, after,
+      `${featureId}: before and after "${request.question}"`
+    )
+  }
+
   private async _writeAgentInstructions(featuresDir: string): Promise<void> {
     const target = vscode.Uri.file(path.join(featuresDir, 'AGENTS.md'))
     const config = vscode.workspace.getConfiguration('kanbanmd')
@@ -1230,7 +1373,8 @@ export class KanbanPanel {
       boardViewMode,
       collapsedEpics,
       locale: getEffectiveLocale(),
-      translations: getBundle()
+      translations: getBundle(),
+      clarifications: this._clarifications
     })
   }
 }

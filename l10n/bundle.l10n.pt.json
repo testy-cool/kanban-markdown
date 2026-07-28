@@ -4,31 +4,26 @@
   "status.inProgress": "Em progresso",
   "status.review": "Em revisão",
   "status.done": "Concluído",
-
   "status.backlog.description": "Ainda não planeado",
   "status.todo.description": "Planeado para desenvolvimento",
   "status.inProgress.description": "Atualmente em desenvolvimento",
   "status.review.description": "Pronto para revisão",
   "status.done.description": "Concluído",
-
   "priority.critical": "Crítica",
   "priority.high": "Alta",
   "priority.medium": "Média",
   "priority.low": "Baixa",
   "priority.mediumShort": "Méd",
-
   "priority.critical.description": "Urgente, precisa de atenção imediata",
   "priority.high.description": "Importante, deve ser feito em breve",
   "priority.medium.description": "Prioridade normal",
   "priority.low.description": "Desejável, pode esperar",
-
   "property.status": "Estado",
   "property.priority": "Prioridade",
   "property.assignee": "Responsável",
   "property.dueDate": "Data limite",
   "property.labels": "Etiquetas",
   "property.epic": "Épico",
-
   "editor.buildWithAI": "Construir com IA",
   "editor.delete": "ELIMINAR",
   "editor.open": "ABRIR",
@@ -41,13 +36,11 @@
   "editor.addLabels": "Adicionar etiquetas...",
   "editor.noAssignee": "Sem responsável",
   "editor.noEpic": "Sem épico",
-
   "create.title": "Criar funcionalidade",
   "create.featureTitle": "Título da funcionalidade...",
   "create.addDescription": "Adicionar uma descrição...",
   "create.autoSaves": "Guarda automaticamente ao fechar",
   "create.saveAndClose": "para guardar e fechar",
-
   "toolbar.search": "Pesquisar funcionalidades...",
   "toolbar.allPriorities": "Todas as prioridades",
   "toolbar.allAssignees": "Todos os responsáveis",
@@ -69,7 +62,6 @@
   "toolbar.manageLabels": "Gerir etiquetas",
   "toolbar.openSettings": "Abrir definições",
   "toolbar.pressKeyToAdd": "Prima {key} para adicionar",
-
   "date.day.mo": "Se",
   "date.day.tu": "Te",
   "date.day.we": "Qu",
@@ -91,7 +83,6 @@
   "date.month.december": "Dezembro",
   "date.dueDate": "Data limite",
   "date.today": "Hoje",
-
   "card.overdue": "Atrasado",
   "card.today": "Hoje",
   "card.tomorrow": "Amanhã",
@@ -103,17 +94,14 @@
   "card.daysAgo": "há {count}d",
   "card.monthsAgo": "há {count}me",
   "card.yearsAgo": "há {count}a",
-
   "column.collapse": "Recolher {name}",
   "column.addTo": "Adicionar a {name}",
   "column.options": "Opções da coluna",
   "column.moveAllCards": "Mover todos os cartões desta lista",
   "column.archiveAllCards": "Arquivar todos os cartões desta lista",
   "column.noFeatures": "Sem funcionalidades",
-
   "epic.noEpic": "Sem épico",
   "epic.emptyHint": "Atribua um épico a um cartão para ver faixas aqui.",
-
   "labels.manage": "Gerir etiquetas",
   "labels.confirmRename": "Confirmar renomeação",
   "labels.cancel": "Cancelar",
@@ -121,15 +109,11 @@
   "labels.usedOnMany": "Usada em {count} cartões",
   "labels.renameLabel": "Renomear etiqueta",
   "labels.deleteLabel": "Eliminar etiqueta",
-
   "quickAdd.addFeature": "Adicionar funcionalidade",
   "quickAdd.featureTitle": "Título da funcionalidade...",
-
   "undo.undo": "Desfazer",
-
   "app.loading": "A carregar...",
   "app.deleted": "Eliminado \"{title}\"",
-
   "ai.claude": "Claude",
   "ai.codex": "Codex",
   "ai.copilot": "Copilot",
@@ -148,7 +132,6 @@
   "ai.mode.codex.fullAuto.description": "Automatização total",
   "ai.mode.copilot.default.description": "Modo padrão",
   "ai.mode.opencode.default.description": "Modo padrão",
-
   "ext.noWorkspace": "Nenhuma pasta de trabalho aberta",
   "ext.featureTitle": "Título da funcionalidade",
   "ext.featureTitlePlaceholder": "Introduza um título para a nova funcionalidade",
@@ -157,7 +140,6 @@
   "ext.descriptionOptional": "Descrição (opcional)",
   "ext.descriptionPlaceholder": "Introduza uma descrição para a funcionalidade",
   "ext.createdFeature": "Funcionalidade criada: {title}",
-
   "panel.title": "Quadro Kanban",
   "panel.noWorkspace": "Nenhuma pasta de trabalho aberta",
   "panel.deleteFailed": "Falha ao eliminar funcionalidade: {error}",
@@ -179,10 +161,18 @@
   "panel.languageChanged": "Kanban Markdown: idioma alterado. Atualizar os nomes das colunas?",
   "panel.updateColumns": "Atualizar colunas",
   "panel.keepColumns": "Manter atuais",
-
   "sidebar.openBoard": "Abrir quadro",
   "sidebar.newFeature": "Nova funcionalidade",
   "sidebar.overview": "Resumo",
   "sidebar.total": "{count} no total",
-  "sidebar.inProgress": "Em progresso"
+  "sidebar.inProgress": "Em progresso",
+  "clarify.noSnapshot": "Ainda nao ha uma versao anterior guardada deste cartao para comparar.",
+  "clarify.pending": "A esclarecer",
+  "clarify.working": "A esclarecer agora",
+  "clarify.answered": "Esclarecido",
+  "clarify.compare": "Comparar com a versao anterior",
+  "clarify.dismiss": "Descartar este esclarecimento",
+  "clarify.ask": "Perguntar sobre isto",
+  "clarify.askPlaceholder": "O que queres que seja esclarecido?",
+  "clarify.submit": "Perguntar"
 }

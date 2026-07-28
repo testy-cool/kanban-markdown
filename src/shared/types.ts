@@ -112,10 +112,11 @@ export function epicLaneId(epic: string | null | undefined): string {
 }
 
 export type ExtensionMessage =
-  | { type: 'init'; features: Feature[]; columns: KanbanColumn[]; settings: CardDisplaySettings; collapsedColumns: string[]; boardViewMode: BoardViewMode; collapsedEpics: string[]; locale: string; translations: Record<string, string> }
+  | { type: 'init'; features: Feature[]; columns: KanbanColumn[]; settings: CardDisplaySettings; collapsedColumns: string[]; boardViewMode: BoardViewMode; collapsedEpics: string[]; locale: string; translations: Record<string, string>; clarifications: Record<string, CardClarifications> }
   | { type: 'featuresUpdated'; features: Feature[] }
   | { type: 'triggerCreateDialog' }
   | { type: 'featureContent'; featureId: string; content: string; frontmatter: FeatureFrontmatter }
+  | { type: 'clarificationsUpdated'; clarifications: Record<string, CardClarifications> }
 
 // Frontmatter for editing
 export interface FeatureFrontmatter {
@@ -150,6 +151,9 @@ export type WebviewMessage =
   | { type: 'archiveAllCards'; sourceColumnId: string }
   | { type: 'renameLabel'; oldName: string; newName: string }
   | { type: 'deleteLabel'; labelName: string }
+  | { type: 'askClarification'; featureId: string; quote: string; occurrence: number; question: string }
+  | { type: 'dismissClarification'; featureId: string; clarificationId: string }
+  | { type: 'openClarificationDiff'; featureId: string; clarificationId: string }
 
 /**
  * A question asked about one passage of a card, and what came of it.
