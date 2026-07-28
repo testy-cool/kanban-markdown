@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Feature, FeatureStatus, KanbanColumn, Priority, CardDisplaySettings, BoardViewMode } from '../../shared/types'
+import type { Feature, FeatureStatus, KanbanColumn, Priority, CardDisplaySettings, BoardViewMode, CardClarifications } from '../../shared/types'
 import { featureMatchesEpicLane } from '../../shared/epicLane'
 
 export type DueDateFilter = 'all' | 'overdue' | 'today' | 'this-week' | 'no-date'
@@ -18,6 +18,8 @@ interface KanbanState {
   layout: LayoutMode
   boardViewMode: BoardViewMode
   cardSettings: CardDisplaySettings
+  /** Questions asked about each card, keyed by card id. */
+  clarifications: Record<string, CardClarifications>
   collapsedColumns: Set<string>
   collapsedEpics: Set<string>
 
@@ -26,6 +28,7 @@ interface KanbanState {
   setColumns: (columns: KanbanColumn[]) => void
   setIsDarkMode: (dark: boolean) => void
   setCardSettings: (settings: CardDisplaySettings) => void
+  setClarifications: (value: Record<string, CardClarifications>) => void
   setSearchQuery: (query: string) => void
   setPriorityFilter: (priority: Priority | 'all') => void
   setAssigneeFilter: (assignee: string | 'all') => void
@@ -101,6 +104,7 @@ export const useStore = create<KanbanState>((set, get) => ({
   boardViewMode: 'standard',
   collapsedColumns: new Set<string>(),
   collapsedEpics: new Set<string>(),
+  clarifications: {},
   cardSettings: {
     showPriorityBadges: true,
     showAssignee: true,
@@ -128,6 +132,7 @@ export const useStore = create<KanbanState>((set, get) => ({
   setColumns: (columns) => set({ columns }),
   setIsDarkMode: (dark) => set({ isDarkMode: dark }),
   setCardSettings: (settings) => set({ cardSettings: settings }),
+  setClarifications: (value) => set({ clarifications: value }),
   setSearchQuery: (query) => set({ searchQuery: query }),
   setPriorityFilter: (priority) => set({ priorityFilter: priority }),
   setAssigneeFilter: (assignee) => set({ assigneeFilter: assignee }),

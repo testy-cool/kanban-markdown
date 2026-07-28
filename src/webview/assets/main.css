@@ -440,3 +440,54 @@ textarea:focus {
   text-decoration: line-through;
   opacity: 0.7;
 }
+
+/* The clarification chip. It sits on the card face and in the editor, saying
+   what was asked and how far it got. The question is shown rather than hidden
+   behind a hover, because remembering what you asked is the whole point. */
+.clarify-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  min-width: 0;
+  padding: 0.15em 0.4em;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--vscode-foreground, #cccccc) 7%, transparent);
+}
+
+.clarify-chip[data-status='pending'] {
+  border-color: color-mix(in srgb, var(--vscode-charts-yellow, #cca700) 32%, transparent);
+}
+
+.clarify-chip[data-status='working'] {
+  border-color: color-mix(in srgb, var(--vscode-charts-blue, #3794ff) 32%, transparent);
+}
+
+.clarify-chip[data-status='answered'] {
+  border-color: color-mix(in srgb, var(--vscode-charts-green, #89d185) 32%, transparent);
+}
+
+/* The question truncates rather than wrapping, so one long question cannot
+   push a card to twice its height. The full text is on the tooltip. */
+.clarify-question {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--vscode-foreground, #cccccc);
+}
+
+/* The popup that appears over a selection in the card editor. */
+.clarify-pop {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.25em;
+  border: 1px solid var(--vscode-menu-border, var(--vscode-widget-border, rgba(128, 128, 128, 0.35)));
+  border-radius: 5px;
+  background: var(--vscode-menu-background, var(--vscode-editorWidget-background, #252526));
+  box-shadow: 0 4px 12px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36));
+}

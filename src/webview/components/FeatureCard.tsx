@@ -3,6 +3,7 @@ import { getTitleFromContent } from '../../shared/types'
 import type { Feature, Priority } from '../../shared/types'
 import { epicThemeFromName } from '../../shared/epicColor'
 import { renderInlineMarkdown, excerptFromContent } from '../lib/inlineMarkdown'
+import { ClarifyChip } from './ClarifyChip'
 import { useStore } from '../store'
 import { t } from '../lib/i18n'
 
@@ -29,7 +30,7 @@ function getPriorityLabels(): Record<Priority, string> {
 }
 
 export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) {
-  const { cardSettings, locale, isDarkMode } = useStore()
+  const { cardSettings, locale, isDarkMode, clarifications } = useStore()
   const priorityLabels = getPriorityLabels()
   const title = getTitleFromContent(feature.content)
   const description = excerptFromContent(feature.content)
@@ -134,6 +135,14 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
             <span className="truncate font-medium" style={{ color: epicTheme.foreground }}>
               {epicTrimmed}
             </span>
+          </div>
+        )}
+
+        {/* What was asked about this card. Above the labels, because an
+            outstanding question matters more than how it is tagged. */}
+        {clarifications[feature.id] && (
+          <div className="mb-1.5 text-[0.9em]">
+            <ClarifyChip clarifications={clarifications[feature.id]} />
           </div>
         )}
 

@@ -40,7 +40,9 @@ function App(): React.JSX.Element {
     setCollapsedEpics,
     boardViewMode,
     setBoardViewMode,
-    setLocale
+    setLocale,
+    clarifications,
+    setClarifications
   } = useStore()
 
   const [createFeatureOpen, setCreateFeatureOpen] = useState(false)
@@ -268,10 +270,14 @@ function App(): React.JSX.Element {
               setEditingFeature(null)
             }
             setCardSettings(message.settings)
+            setClarifications(message.clarifications ?? {})
           }
           break
         case 'featuresUpdated':
           setFeatures(message.features)
+          break
+        case 'clarificationsUpdated':
+          setClarifications(message.clarifications)
           break
         case 'triggerCreateDialog':
           setCreateFeatureStatus('backlog')
@@ -298,7 +304,7 @@ function App(): React.JSX.Element {
     vscode.postMessage({ type: 'ready' })
 
     return () => window.removeEventListener('message', handleMessage)
-  }, [setFeatures, setColumns, setCardSettings, setCollapsedColumns, setCollapsedEpics, setBoardViewMode, setLocale])
+  }, [setFeatures, setColumns, setCardSettings, setClarifications, setCollapsedColumns, setCollapsedEpics, setBoardViewMode, setLocale])
 
   const handleFeatureClick = (feature: Feature): void => {
     // Request feature content for inline editing
@@ -441,6 +447,20 @@ function App(): React.JSX.Element {
               onDelete={handleDeleteFeature}
               onOpenFile={handleOpenFile}
               onStartWithAI={handleStartWithAI}
+              clarifications={clarifications[editingFeature.id] ?? null}
+              onAskClarification={(asked) => vscode.postMessage({
+                type: 'askClarification',
+                featureId: editingFeature.id,
+                quote: asked.quote,
+                occurrence: asked.occurrence,
+                question: asked.question
+              })}
+              onCompareClarification={(clarificationId) => vscode.postMessage({
+                type: 'openClarificationDiff', featureId: editingFeature.id, clarificationId
+              })}
+              onDismissClarification={(clarificationId) => vscode.postMessage({
+                type: 'dismissClarification', featureId: editingFeature.id, clarificationId
+              })}
             />
             </Suspense>
           </div>

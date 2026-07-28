@@ -1,5 +1,7 @@
 import { useEffect, useCallback, useState, useRef, useMemo } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
+import { ClarifyPopup, type AskedQuestion } from './ClarifyPopup'
+import { ClarifyChip } from './ClarifyChip'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import { Markdown } from 'tiptap-markdown'
@@ -41,6 +43,10 @@ function getMarkdown(editor: { storage: unknown }): string {
 
 interface FeatureEditorProps {
   featureId: string
+  clarifications?: import('../../shared/types').CardClarifications | null
+  onAskClarification?: (asked: AskedQuestion) => void
+  onCompareClarification?: (clarificationId: string) => void
+  onDismissClarification?: (clarificationId: string) => void
   content: string
   frontmatter: FeatureFrontmatter
   contentVersion?: number
@@ -521,6 +527,10 @@ function LabelEditor({
 
 export function FeatureEditor({
   featureId,
+  clarifications = null,
+  onAskClarification,
+  onCompareClarification,
+  onDismissClarification,
   content,
   frontmatter,
   contentVersion,
@@ -539,6 +549,8 @@ export function FeatureEditor({
   const isInitialLoad = useRef(true)
   const currentFrontmatterRef = useRef(currentFrontmatter)
   currentFrontmatterRef.current = currentFrontmatter
+
+  const editorAreaRef = useRef<HTMLDivElement>(null)
 
   const editor = useEditor({
     extensions: [
@@ -788,10 +800,25 @@ export function FeatureEditor({
         )}
       </div>
 
+      {/* What has been asked about this card, and where it got to. */}
+      {clarifications && clarifications.requests.length > 0 && (
+        <div className="px-4 pb-2 text-xs">
+          <ClarifyChip
+            clarifications={clarifications}
+            onCompare={onCompareClarification}
+            onDismiss={onDismissClarification}
+          />
+        </div>
+      )}
+
       {/* Editor */}
-      <div className="flex-1 overflow-auto">
+      <div ref={editorAreaRef} className="flex-1 overflow-auto">
         <EditorContent editor={editor} className="h-full" />
       </div>
+
+      {onAskClarification && (
+        <ClarifyPopup containerRef={editorAreaRef} onAsk={onAskClarification} />
+      )}
     </div>
   )
 }
