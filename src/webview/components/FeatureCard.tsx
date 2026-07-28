@@ -139,17 +139,19 @@ export function FeatureCard({ feature, onClick, isDragging }: FeatureCardProps) 
 
         {/* Labels */}
         {cardSettings.showLabels && feature.labels.length > 0 && (
-          <div className="flex flex-wrap gap-1 mb-2">
+          <div className="flex flex-wrap items-center gap-1 mb-2">
             {feature.labels.slice(0, 3).map((label) => (
-              <span
-                key={label}
-                className="tag text-xs"
-              >
+              <span key={label} className="tag text-xs">
                 {label}
               </span>
             ))}
             {feature.labels.length > 3 && (
-              <span className="text-xs text-fg-dim">+{feature.labels.length - 3}</span>
+              <span
+                className="tag-more text-xs"
+                title={feature.labels.slice(3).join(', ')}
+              >
+                +{feature.labels.length - 3}
+              </span>
             )}
           </div>
         )}

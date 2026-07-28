@@ -138,17 +138,47 @@ html.hide-scrollbar::-webkit-scrollbar {
    chip rather than a filled pill. The border is mixed out of the foreground
    colour so it sits at the same distance from the background on a black theme
    and a white one, without needing a rule for each. */
-.tag {
+.tag,
+.tag-more {
   display: inline-flex;
   align-items: center;
   gap: 0.25em;
   padding: 0 0.4em;
-  border: 1px solid color-mix(in srgb, var(--vscode-foreground, #cccccc) 26%, transparent);
+  border: 1px solid transparent;
   border-radius: 2px;
   color: var(--vscode-descriptionForeground, rgba(204, 204, 204, 0.7));
   background: transparent;
   line-height: 1.6;
   white-space: nowrap;
+}
+
+.tag {
+  border-color: color-mix(in srgb, var(--vscode-foreground, #cccccc) 26%, transparent);
+}
+
+/* The count of labels that did not fit. It shares the tag's height and padding
+   so it sits on the same line as them, but carries no border, because it is a
+   count rather than another label. */
+.tag-more {
+  padding-left: 0.15em;
+  padding-right: 0.15em;
+}
+
+/* Keyboard hints. VS Code has its own colours for the little key shapes it
+   shows in menus and the command palette, including the darker line along the
+   bottom that gives them their pressed look. */
+kbd {
+  display: inline-block;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--vscode-keybindingLabel-border, rgba(128, 128, 128, 0.35));
+  border-bottom-color: var(--vscode-keybindingLabel-bottomBorder, rgba(128, 128, 128, 0.55));
+  border-radius: 3px;
+  background: var(--vscode-keybindingLabel-background, rgba(128, 128, 128, 0.17));
+  color: var(--vscode-keybindingLabel-foreground, var(--vscode-foreground, #cccccc));
+  font-family: inherit;
+  font-size: 0.9em;
+  line-height: 1.3;
+  vertical-align: baseline;
 }
 
 /* Priority badges.

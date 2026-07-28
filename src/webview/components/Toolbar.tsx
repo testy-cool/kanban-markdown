@@ -196,7 +196,7 @@ export function Toolbar({
 
       {/* Keyboard hint */}
       <div className="ml-auto text-xs text-fg-dim">
-        {t('toolbar.pressKeyToAdd').split('{key}')[0]}<kbd className="px-1.5 py-0.5 bg-badge text-badge-fg rounded">n</kbd>{t('toolbar.pressKeyToAdd').split('{key}')[1]}
+        {t('toolbar.pressKeyToAdd').split('{key}')[0]}<kbd>n</kbd>{t('toolbar.pressKeyToAdd').split('{key}')[1]}
       </div>
     </div>
   )

@@ -2,7 +2,7 @@
   "name": "kanbanmd",
   "displayName": "Plain Kanban: Markdown Board for Agents",
   "description": "A lightweight kanban board where every task is a plain markdown file in your git repo. Hand work to Claude Code, Codex or Copilot, and keep it organised. No accounts, no service, just files you can commit and diff.",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "packageManager": "pnpm@9.15.9",
   "publisher": "testycool",
   "license": "MIT",
