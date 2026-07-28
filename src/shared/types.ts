@@ -150,3 +150,32 @@ export type WebviewMessage =
   | { type: 'archiveAllCards'; sourceColumnId: string }
   | { type: 'renameLabel'; oldName: string; newName: string }
   | { type: 'deleteLabel'; labelName: string }
+
+/**
+ * A question asked about one passage of a card, and what came of it.
+ *
+ * These live beside the cards rather than in their frontmatter, because the
+ * serializer writes a fixed set of fields and would drop anything else the
+ * next time the card was saved.
+ */
+export interface Clarification {
+  id: string
+  /** The exact passage the question was asked about. */
+  quote: string
+  /** Which occurrence of that passage, when it appears more than once. */
+  occurrence: number
+  question: string
+  /** pending: waiting. working: being answered now. answered: done. */
+  status: 'pending' | 'working' | 'answered'
+  askedAt: string
+  answeredAt: string | null
+  /** Path of the card as it was before the answer, relative to the board. */
+  snapshotPath: string | null
+  /** One line saying what changed, written when the answer lands. */
+  summary: string | null
+}
+
+export interface CardClarifications {
+  cardId: string
+  requests: Clarification[]
+}
