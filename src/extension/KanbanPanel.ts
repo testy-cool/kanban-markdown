@@ -5,6 +5,7 @@ import { generateKeyBetween, generateNKeysBetween } from 'fractional-indexing'
 import { getTitleFromContent, generateFeatureFilename } from '../shared/types'
 import type { Feature, FeatureStatus, Priority, KanbanColumn, FeatureFrontmatter, CardDisplaySettings, FilenamePattern, AIAgent, AIPermissionMode, BoardViewMode } from '../shared/types'
 import { ensureStatusSubfolders, moveFeatureFile, getFeatureFilePath, getStatusFromPath, fileExists } from './featureFileUtils'
+import { buildAgentInstructions, GENERATED_MARKER } from './agentInstructions'
 import { parseFeatureFile, serializeFeature } from '../shared/featureFrontmatter'
 import { featureMatchesEpicLane } from '../shared/epicLane'
 import { t, getBundle, getEffectiveLocale, reloadBundle, getAllDefaultColumnNames, getDefaultColumnNamesForLocale } from './l10n'
@@ -102,10 +103,15 @@ export class KanbanPanel {
     this._panel.webview.onDidReceiveMessage(
       async (message) => {
         switch (message.type) {
-          case 'ready':
+          case 'ready': {
             await this._loadFeatures()
             this._sendFeaturesToWebview()
+            // Done once the board is up rather than on every reload, so a file
+            // change never turns into another write.
+            const dir = this._getWorkspaceFeaturesDir()
+            if (dir) await this._writeAgentInstructions(dir)
             break
+          }
           case 'createFeature': {
             await this._createFeature(message.data)
             const createConfig = vscode.workspace.getConfiguration('kanbanmd')
@@ -355,9 +361,40 @@ export class KanbanPanel {
     try {
       await vscode.workspace.fs.createDirectory(vscode.Uri.file(featuresDir))
       await ensureStatusSubfolders(featuresDir)
+      await this._writeAgentInstructions(featuresDir)
       return featuresDir
     } catch {
       return null
+    }
+  }
+
+  /**
+   * Keeps AGENTS.md in the board folder so a coding agent can work the board
+   * without being told the format each time.
+   *
+   * It is only written when it is missing or when the copy on disk is still the
+   * generated one. Once somebody edits it the marker goes and we leave it alone
+   * rather than overwriting their words.
+   */
+  private async _writeAgentInstructions(featuresDir: string): Promise<void> {
+    const target = vscode.Uri.file(path.join(featuresDir, 'AGENTS.md'))
+    const config = vscode.workspace.getConfiguration('kanbanmd')
+    const columns = config.get<KanbanColumn[]>('columns', [])
+    const directory = config.get<string>('featuresDirectory') || '.devtool/features'
+    const wanted = buildAgentInstructions(columns, directory)
+
+    try {
+      const existing = new TextDecoder().decode(await vscode.workspace.fs.readFile(target))
+      if (existing === wanted) return
+      if (!existing.startsWith(GENERATED_MARKER)) return
+    } catch {
+      // Not there yet, which is the usual case the first time.
+    }
+
+    try {
+      await vscode.workspace.fs.writeFile(target, new TextEncoder().encode(wanted))
+    } catch {
+      // A board on a read only checkout still works, it just has no guide.
     }
   }
 
