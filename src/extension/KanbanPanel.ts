@@ -213,6 +213,9 @@ export class KanbanPanel {
           case 'openClarificationDiff':
             await this._openClarificationDiff(message.featureId, message.clarificationId)
             break
+          case 'requestSnapshot':
+            await this._sendSnapshot(message.featureId, message.clarificationId)
+            break
           case 'deleteLabel':
             await this._deleteLabel(message.labelName)
             break
@@ -517,6 +520,31 @@ export class KanbanPanel {
       'vscode.diff', before, after,
       `${featureId}: before and after "${request.question}"`
     )
+  }
+
+  /**
+   * Hands the webview the card as it was before an answer, so it can mark the
+   * change inside the rendered card instead of opening a second editor.
+   *
+   * A missing snapshot answers with null rather than an error, because the
+   * toggle only has to say it has nothing to show.
+   */
+  private async _sendSnapshot(featureId: string, clarificationId: string): Promise<void> {
+    const featuresDir = this._getWorkspaceFeaturesDir()
+    const value = await this._readClarifications(featureId)
+    const request = value.requests.find(r => r.id === clarificationId)
+
+    let content: string | null = null
+    if (featuresDir && request?.snapshotPath) {
+      try {
+        const file = vscode.Uri.file(path.join(featuresDir, request.snapshotPath))
+        content = new TextDecoder().decode(await vscode.workspace.fs.readFile(file))
+      } catch {
+        // The snapshot was moved or deleted. The view says so.
+      }
+    }
+
+    this._panel.webview.postMessage({ type: 'snapshotContent', featureId, clarificationId, content })
   }
 
   private async _writeAgentInstructions(featuresDir: string): Promise<void> {

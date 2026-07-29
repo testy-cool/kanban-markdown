@@ -174,5 +174,10 @@
   "clarify.dismiss": "Dismiss this clarification",
   "clarify.ask": "Ask about this",
   "clarify.askPlaceholder": "What do you want cleared up?",
-  "clarify.submit": "Ask"
+  "clarify.submit": "Ask",
+  "diff.show": "Show changes",
+  "diff.hide": "Hide changes",
+  "diff.noChanges": "This answer did not change the card text.",
+  "diff.snapshotGone": "The saved earlier version of this card is no longer on disk.",
+  "diff.loading": "Loading the earlier version..."
 }

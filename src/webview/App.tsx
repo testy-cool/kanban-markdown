@@ -45,6 +45,10 @@ function App(): React.JSX.Element {
     setClarifications
   } = useStore()
 
+  // The card as it was before one particular answer, fetched only when the
+  // diff toggle asks for it, so opening a card stays as cheap as it was.
+  const [snapshot, setSnapshot] = useState<{ clarificationId: string; content: string | null } | null>(null)
+
   const [createFeatureOpen, setCreateFeatureOpen] = useState(false)
   const [createFeatureStatus, setCreateFeatureStatus] = useState<FeatureStatus>('backlog')
 
@@ -279,6 +283,9 @@ function App(): React.JSX.Element {
         case 'clarificationsUpdated':
           setClarifications(message.clarifications)
           break
+        case 'snapshotContent':
+          setSnapshot({ clarificationId: message.clarificationId, content: message.content })
+          break
         case 'triggerCreateDialog':
           setCreateFeatureStatus('backlog')
           setCreateFeatureOpen(true)
@@ -461,6 +468,11 @@ function App(): React.JSX.Element {
               onDismissClarification={(clarificationId) => vscode.postMessage({
                 type: 'dismissClarification', featureId: editingFeature.id, clarificationId
               })}
+              snapshot={snapshot}
+              onRequestSnapshot={(clarificationId) => {
+                setSnapshot(null)
+                vscode.postMessage({ type: 'requestSnapshot', featureId: editingFeature.id, clarificationId })
+              }}
             />
             </Suspense>
           </div>

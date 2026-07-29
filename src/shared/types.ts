@@ -117,6 +117,7 @@ export type ExtensionMessage =
   | { type: 'triggerCreateDialog' }
   | { type: 'featureContent'; featureId: string; content: string; frontmatter: FeatureFrontmatter }
   | { type: 'clarificationsUpdated'; clarifications: Record<string, CardClarifications> }
+  | { type: 'snapshotContent'; featureId: string; clarificationId: string; content: string | null }
 
 // Frontmatter for editing
 export interface FeatureFrontmatter {
@@ -154,6 +155,7 @@ export type WebviewMessage =
   | { type: 'askClarification'; featureId: string; quote: string; occurrence: number; question: string }
   | { type: 'dismissClarification'; featureId: string; clarificationId: string }
   | { type: 'openClarificationDiff'; featureId: string; clarificationId: string }
+  | { type: 'requestSnapshot'; featureId: string; clarificationId: string }
 
 /**
  * A question asked about one passage of a card, and what came of it.

@@ -491,3 +491,104 @@ textarea:focus {
   background: var(--vscode-menu-background, var(--vscode-editorWidget-background, #252526));
   box-shadow: 0 4px 12px var(--vscode-widget-shadow, rgba(0, 0, 0, 0.36));
 }
+
+/* ---------------------------------------------------------------------------
+   The card rendered with what a clarification changed marked on it.
+
+   The colours are VS Code's own diff editor colours, so the marks match what
+   the side by side diff would have shown for the same change.
+--------------------------------------------------------------------------- */
+
+.card-diff {
+  padding: 1rem 1.25rem 3rem;
+  font-size: var(--kanban-card-excerpt-size, 0.85rem);
+  line-height: 1.55;
+  user-select: text;
+}
+
+.card-diff-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0 0.25em;
+  border-radius: 2px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.card-diff-blank { height: 0.55em; }
+
+.card-diff-line[data-change='added'] {
+  background: var(--vscode-diffEditor-insertedLineBackground,
+    color-mix(in srgb, var(--vscode-charts-green, #89d185) 12%, transparent));
+}
+
+.card-diff-line[data-change='removed'] {
+  background: var(--vscode-diffEditor-removedLineBackground,
+    color-mix(in srgb, var(--vscode-charts-red, #f14c4c) 12%, transparent));
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--vscode-charts-red, #f14c4c) 70%, transparent);
+  opacity: 0.85;
+}
+
+.card-diff-gutter {
+  flex: none;
+  width: 0.9em;
+  text-align: center;
+  font-family: var(--vscode-editor-font-family, monospace);
+  color: var(--vscode-descriptionForeground, #999);
+  text-decoration: none;
+}
+
+.card-diff-text { min-width: 0; }
+
+/* A word that moved, inside a line that was rewritten rather than replaced. */
+.card-diff-word[data-change='added'] {
+  background: var(--vscode-diffEditor-insertedTextBackground,
+    color-mix(in srgb, var(--vscode-charts-green, #89d185) 28%, transparent));
+  border-radius: 2px;
+}
+
+.card-diff-word[data-change='removed'] {
+  background: var(--vscode-diffEditor-removedTextBackground,
+    color-mix(in srgb, var(--vscode-charts-red, #f14c4c) 28%, transparent));
+  border-radius: 2px;
+}
+
+.card-diff-heading {
+  font-weight: 600;
+  color: var(--vscode-foreground, #ccc);
+}
+
+.card-diff-heading[data-level='1'] { font-size: 1.35em; }
+.card-diff-heading[data-level='2'] { font-size: 1.18em; }
+.card-diff-heading[data-level='3'] { font-size: 1.06em; }
+
+.card-diff-item { display: inline-block; }
+
+.card-diff-marker {
+  display: inline-block;
+  min-width: 1.1em;
+  color: var(--vscode-descriptionForeground, #999);
+}
+
+.card-diff-quote {
+  display: inline-block;
+  padding-left: 0.6em;
+  border-left: 2px solid var(--vscode-textBlockQuote-border, #444);
+  color: var(--vscode-descriptionForeground, #999);
+}
+
+.card-diff-rule {
+  display: block;
+  height: 1px;
+  margin: 0.4em 0;
+  background: var(--vscode-panel-border, #444);
+}
+
+.card-diff-code {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 0.92em;
+  color: var(--vscode-textPreformat-foreground, var(--vscode-foreground, #ccc));
+  white-space: pre-wrap;
+}

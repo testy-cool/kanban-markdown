@@ -18,7 +18,8 @@ import {
   Calendar,
   Trash2,
   FileText,
-  Layers
+  Layers,
+  GitCompareArrows
 } from 'lucide-react'
 import type {
   FeatureFrontmatter,
@@ -32,6 +33,8 @@ import { t } from '../lib/i18n'
 import { useStore } from '../store'
 import { AssigneeInput } from './AssigneeInput'
 import { EpicInput } from './EpicInput'
+import { Select } from './Select'
+import { CardDiff } from './CardDiff'
 
 interface MarkdownStorage {
   markdown: { getMarkdown: () => string }
@@ -47,6 +50,10 @@ interface FeatureEditorProps {
   onAskClarification?: (asked: AskedQuestion) => void
   onCompareClarification?: (clarificationId: string) => void
   onDismissClarification?: (clarificationId: string) => void
+  /** Asks the extension for the card as it was before a given answer. */
+  onRequestSnapshot?: (clarificationId: string) => void
+  /** The answer to that request. `content` is null when the snapshot has gone. */
+  snapshot?: { clarificationId: string; content: string | null } | null
   content: string
   frontmatter: FeatureFrontmatter
   contentVersion?: number
@@ -531,6 +538,8 @@ export function FeatureEditor({
   onAskClarification,
   onCompareClarification,
   onDismissClarification,
+  onRequestSnapshot,
+  snapshot = null,
   content,
   frontmatter,
   contentVersion,
@@ -551,6 +560,26 @@ export function FeatureEditor({
   currentFrontmatterRef.current = currentFrontmatter
 
   const editorAreaRef = useRef<HTMLDivElement>(null)
+
+  // Which answered question's changes are on show, or null for none. Only
+  // answers that took a snapshot can be compared, so the list is filtered.
+  const [diffFor, setDiffFor] = useState<string | null>(null)
+  const comparable = useMemo(
+    () => (clarifications?.requests ?? []).filter(r => r.status === 'answered' && r.snapshotPath),
+    [clarifications]
+  )
+  const showingDiff = diffFor !== null && comparable.some(r => r.id === diffFor)
+
+  const openDiff = useCallback((clarificationId: string) => {
+    setDiffFor(clarificationId)
+    onRequestSnapshot?.(clarificationId)
+  }, [onRequestSnapshot])
+
+  // A card whose last comparable answer was dismissed should not stay stuck
+  // showing a diff against a snapshot that is no longer offered.
+  useEffect(() => {
+    if (diffFor && !comparable.some(r => r.id === diffFor)) setDiffFor(null)
+  }, [comparable, diffFor])
 
   const editor = useEditor({
     extensions: [
@@ -811,12 +840,56 @@ export function FeatureEditor({
         </div>
       )}
 
-      {/* Editor */}
+      {/* Turning the rendered card into a marked-up version of itself. */}
+      {comparable.length > 0 && (
+        <div className="flex items-center gap-2 px-4 pb-2 text-xs">
+          <button
+            type="button"
+            data-testid="diff-toggle"
+            aria-pressed={showingDiff}
+            className={cn(
+              'flex items-center gap-1 px-2 py-0.5 rounded border',
+              showingDiff
+                ? 'bg-selected border-focus text-fg-strong'
+                : 'bg-raised border-raised-line text-fg hover:bg-raised-hover'
+            )}
+            onClick={() => (showingDiff ? setDiffFor(null) : openDiff(comparable[comparable.length - 1].id))}
+          >
+            <GitCompareArrows size={12} />
+            {showingDiff ? t('diff.hide') : t('diff.show')}
+          </button>
+
+          {showingDiff && comparable.length > 1 && (
+            <Select
+              value={diffFor ?? ''}
+              onChange={openDiff}
+              options={comparable.map(r => ({ value: r.id, label: r.question }))}
+              className="min-w-0 flex-1"
+            />
+          )}
+        </div>
+      )}
+
+      {/* Editor, or the same text with the change marked on it. */}
       <div ref={editorAreaRef} className="flex-1 overflow-auto">
-        <EditorContent editor={editor} className="h-full" />
+        {showingDiff ? (
+          snapshot?.clarificationId === diffFor ? (
+            snapshot.content === null ? (
+              <div className="px-4 py-6 text-sm text-fg-dim">{t('diff.snapshotGone')}</div>
+            ) : (
+              <CardDiff before={snapshot.content} after={content} />
+            )
+          ) : (
+            <div className="px-4 py-6 text-sm text-fg-dim">{t('diff.loading')}</div>
+          )
+        ) : (
+          <EditorContent editor={editor} className="h-full" />
+        )}
       </div>
 
-      {onAskClarification && (
+      {/* No asking about the diff view, since half of what it shows is text
+          the card no longer contains. */}
+      {onAskClarification && !showingDiff && (
         <ClarifyPopup containerRef={editorAreaRef} onAsk={onAskClarification} />
       )}
     </div>
