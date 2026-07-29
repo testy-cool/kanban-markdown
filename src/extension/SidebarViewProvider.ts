@@ -4,6 +4,7 @@ import * as path from 'path'
 import { getTitleFromContent } from '../shared/types'
 import type { FeatureStatus, Priority, KanbanColumn } from '../shared/types'
 import { KanbanPanel } from './KanbanPanel'
+import { getActiveBoardDir } from './workspaceProjects'
 import { t } from './l10n'
 
 interface SidebarFeature {
@@ -141,11 +142,7 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
   }
 
   private _getFeaturesDir(): string | null {
-    const workspaceFolders = vscode.workspace.workspaceFolders
-    if (!workspaceFolders || workspaceFolders.length === 0) return null
-    const config = vscode.workspace.getConfiguration('kanbanmd')
-    const dir = config.get<string>('featuresDirectory') || '.devtool/features'
-    return path.join(workspaceFolders[0].uri.fsPath, dir)
+    return getActiveBoardDir(this._context.workspaceState)
   }
 
   private _getColumns(): KanbanColumn[] {

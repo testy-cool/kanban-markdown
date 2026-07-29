@@ -179,5 +179,6 @@
   "diff.hide": "Ocultar alteracoes",
   "diff.noChanges": "Esta resposta nao alterou o texto do cartao.",
   "diff.snapshotGone": "A versao anterior guardada deste cartao ja nao esta no disco.",
-  "diff.loading": "A carregar a versao anterior..."
+  "diff.loading": "A carregar a versao anterior...",
+  "project.switch": "Mudar de projeto"
 }

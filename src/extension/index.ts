@@ -1,5 +1,4 @@
 import * as vscode from 'vscode'
-import * as path from 'path'
 import { generateKeyBetween } from 'fractional-indexing'
 import { KanbanPanel } from './KanbanPanel'
 import { SidebarViewProvider } from './SidebarViewProvider'
@@ -8,6 +7,7 @@ import { serializeFeature } from '../shared/featureFrontmatter'
 import type { Feature, FeatureStatus, Priority } from '../shared/types'
 import { ensureStatusSubfolders, getFeatureFilePath } from './featureFileUtils'
 import { t, loadBundle } from './l10n'
+import { getActiveBoardDir } from './workspaceProjects'
 
 interface StatusQuickPickItem extends vscode.QuickPickItem {
   statusValue: FeatureStatus
@@ -17,9 +17,11 @@ interface PriorityQuickPickItem extends vscode.QuickPickItem {
   priorityValue: Priority
 }
 
-async function createFeatureFromPrompts(): Promise<void> {
-  const workspaceFolders = vscode.workspace.workspaceFolders
-  if (!workspaceFolders || workspaceFolders.length === 0) {
+async function createFeatureFromPrompts(context: vscode.ExtensionContext): Promise<void> {
+  // The card goes to the project the board is currently showing, not to
+  // whichever folder happens to be first in the workspace.
+  const featuresDir = getActiveBoardDir(context.workspaceState)
+  if (!featuresDir) {
     vscode.window.showErrorMessage(t('ext.noWorkspace'))
     return
   }
@@ -67,9 +69,6 @@ async function createFeatureFromPrompts(): Promise<void> {
   })
 
   // Create the feature file
-  const config = vscode.workspace.getConfiguration('kanbanmd')
-  const featuresDirectory = config.get<string>('featuresDirectory') || '.devtool/features'
-  const featuresDir = path.join(workspaceFolders[0].uri.fsPath, featuresDirectory)
   await vscode.workspace.fs.createDirectory(vscode.Uri.file(featuresDir))
   await ensureStatusSubfolders(featuresDir)
 
@@ -128,7 +127,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('kanbanmd.addFeature', () => {
-      createFeatureFromPrompts()
+      createFeatureFromPrompts(context)
     })
   )
 

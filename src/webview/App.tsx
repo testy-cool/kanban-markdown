@@ -9,6 +9,7 @@ import type { Feature, FeatureStatus, Priority, ExtensionMessage, FeatureFrontma
 import { getTitleFromContent } from '../shared/types'
 import { vscode } from './vscodeApi'
 import { initLocale, t } from './lib/i18n'
+import { projectColorVar } from '../shared/projects'
 
 // The rich text editor and everything under it is roughly three quarters of the
 // webview, and none of it is needed to look at a board. Both of these mount
@@ -42,7 +43,10 @@ function App(): React.JSX.Element {
     setBoardViewMode,
     setLocale,
     clarifications,
-    setClarifications
+    setClarifications,
+    projects,
+    activeProjectPath,
+    setProjects
   } = useStore()
 
   // The card as it was before one particular answer, fetched only when the
@@ -275,6 +279,7 @@ function App(): React.JSX.Element {
             }
             setCardSettings(message.settings)
             setClarifications(message.clarifications ?? {})
+            setProjects(message.projects ?? [], message.activeProjectPath ?? null)
           }
           break
         case 'featuresUpdated':
@@ -311,7 +316,7 @@ function App(): React.JSX.Element {
     vscode.postMessage({ type: 'ready' })
 
     return () => window.removeEventListener('message', handleMessage)
-  }, [setFeatures, setColumns, setCardSettings, setClarifications, setCollapsedColumns, setCollapsedEpics, setBoardViewMode, setLocale])
+  }, [setFeatures, setColumns, setCardSettings, setClarifications, setProjects, setCollapsedColumns, setCollapsedEpics, setBoardViewMode, setLocale])
 
   const handleFeatureClick = (feature: Feature): void => {
     // Request feature content for inline editing
@@ -407,6 +412,8 @@ function App(): React.JSX.Element {
   }
 
   // Show loading if no columns yet
+  const activeProject = projects.find(p => p.path === activeProjectPath) ?? null
+
   if (columns.length === 0) {
     return (
       <div className="h-full w-full flex items-center justify-center bg-[var(--vscode-editor-background)]">
@@ -417,12 +424,27 @@ function App(): React.JSX.Element {
 
   return (
     <div className="h-full w-full flex flex-col bg-[var(--vscode-editor-background)]">
+      {/* A stripe in the project's colour across the top of the board, so you
+          can tell which one you are looking at without reading anything. */}
+      {projects.length > 1 && activeProject && (
+        <div
+          className="h-[3px] w-full shrink-0"
+          data-testid="project-stripe"
+          style={{ background: projectColorVar(activeProject.name) }}
+        />
+      )}
       <Toolbar
         onOpenSettings={() => vscode.postMessage({ type: 'openSettings' })}
         boardViewMode={boardViewMode}
         onBoardViewModeChange={(mode) => {
           setBoardViewMode(mode)
           vscode.postMessage({ type: 'setBoardViewMode', mode })
+        }}
+        onSelectProject={(projectPath) => {
+          // The card open on screen belongs to the project being left.
+          setEditingFeature(null)
+          setSnapshot(null)
+          vscode.postMessage({ type: 'selectProject', projectPath })
         }}
       />
       <div className="flex-1 flex overflow-hidden">

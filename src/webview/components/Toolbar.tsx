@@ -1,10 +1,11 @@
-import { Search, X, Columns, Rows, Settings, Tags, Layers } from 'lucide-react'
+import { Search, X, Columns, Rows, Settings, Tags, Layers, FolderGit2 } from 'lucide-react'
 import { useStore, type DueDateFilter } from '../store'
 import type { BoardViewMode, Priority } from '../../shared/types'
 import { useState } from 'react'
 import { LabelManager } from './LabelManager'
 import { Select } from './Select'
 import { t } from '../lib/i18n'
+import { projectColorVar } from '../../shared/projects'
 
 function getPriorities() {
   return [
@@ -31,11 +32,13 @@ const SELECT_WIDTH = 'min-w-[8rem]'
 export function Toolbar({
   onOpenSettings,
   boardViewMode,
-  onBoardViewModeChange
+  onBoardViewModeChange,
+  onSelectProject
 }: {
   onOpenSettings: () => void
   boardViewMode: BoardViewMode
   onBoardViewModeChange: (mode: BoardViewMode) => void
+  onSelectProject: (projectPath: string) => void
 }) {
   const {
     searchQuery,
@@ -54,7 +57,9 @@ export function Toolbar({
     hasActiveFilters,
     layout,
     toggleLayout,
-    cardSettings
+    cardSettings,
+    projects,
+    activeProjectPath
   } = useStore()
 
   const priorities = getPriorities()
@@ -67,6 +72,28 @@ export function Toolbar({
 
   return (
     <div className="toolbar-text flex items-center gap-2 px-4 py-2 border-b border-line bg-column flex-wrap">
+      {/* Which project's board this is. Hidden when there is only one, so a
+          single folder workspace looks exactly as it did before. */}
+      {projects.length > 1 && (
+        <Select
+          value={activeProjectPath ?? ''}
+          onChange={onSelectProject}
+          title={t('project.switch')}
+          className={SELECT_WIDTH}
+          options={projects.map(p => ({
+            value: p.path,
+            label: p.name,
+            dot: projectColorVar(p.name)
+          }))}
+          renderValue={(option) => (
+            <span className="flex items-center gap-1.5 min-w-0">
+              <FolderGit2 size={13} style={{ color: option ? projectColorVar(option.label) : undefined }} />
+              <span className="truncate font-medium">{option?.label ?? ''}</span>
+            </span>
+          )}
+        />
+      )}
+
       {/* Search */}
       <div className="relative flex-1 min-w-[180px] max-w-xs">
         <Search

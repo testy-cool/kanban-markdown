@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Feature, FeatureStatus, KanbanColumn, Priority, CardDisplaySettings, BoardViewMode, CardClarifications } from '../../shared/types'
+import type { Feature, FeatureStatus, KanbanColumn, Priority, CardDisplaySettings, BoardViewMode, CardClarifications, Project } from '../../shared/types'
 import { featureMatchesEpicLane } from '../../shared/epicLane'
 
 export type DueDateFilter = 'all' | 'overdue' | 'today' | 'this-week' | 'no-date'
@@ -20,6 +20,9 @@ interface KanbanState {
   cardSettings: CardDisplaySettings
   /** Questions asked about each card, keyed by card id. */
   clarifications: Record<string, CardClarifications>
+  /** Every project in this workspace, and which one the board is showing. */
+  projects: Project[]
+  activeProjectPath: string | null
   collapsedColumns: Set<string>
   collapsedEpics: Set<string>
 
@@ -29,6 +32,7 @@ interface KanbanState {
   setIsDarkMode: (dark: boolean) => void
   setCardSettings: (settings: CardDisplaySettings) => void
   setClarifications: (value: Record<string, CardClarifications>) => void
+  setProjects: (projects: Project[], activeProjectPath: string | null) => void
   setSearchQuery: (query: string) => void
   setPriorityFilter: (priority: Priority | 'all') => void
   setAssigneeFilter: (assignee: string | 'all') => void
@@ -105,6 +109,8 @@ export const useStore = create<KanbanState>((set, get) => ({
   collapsedColumns: new Set<string>(),
   collapsedEpics: new Set<string>(),
   clarifications: {},
+  projects: [],
+  activeProjectPath: null,
   cardSettings: {
     showPriorityBadges: true,
     showAssignee: true,
@@ -133,6 +139,7 @@ export const useStore = create<KanbanState>((set, get) => ({
   setIsDarkMode: (dark) => set({ isDarkMode: dark }),
   setCardSettings: (settings) => set({ cardSettings: settings }),
   setClarifications: (value) => set({ clarifications: value }),
+  setProjects: (projects, activeProjectPath) => set({ projects, activeProjectPath }),
   setSearchQuery: (query) => set({ searchQuery: query }),
   setPriorityFilter: (priority) => set({ priorityFilter: priority }),
   setAssigneeFilter: (assignee) => set({ assigneeFilter: assignee }),

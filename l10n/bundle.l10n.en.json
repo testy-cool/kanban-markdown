@@ -179,5 +179,6 @@
   "diff.hide": "Hide changes",
   "diff.noChanges": "This answer did not change the card text.",
   "diff.snapshotGone": "The saved earlier version of this card is no longer on disk.",
-  "diff.loading": "Loading the earlier version..."
+  "diff.loading": "Loading the earlier version...",
+  "project.switch": "Switch project"
 }

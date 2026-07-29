@@ -179,5 +179,6 @@
   "diff.hide": "Ocultar cambios",
   "diff.noChanges": "Esta respuesta no cambio el texto de la tarjeta.",
   "diff.snapshotGone": "La version anterior guardada de esta tarjeta ya no esta en el disco.",
-  "diff.loading": "Cargando la version anterior..."
+  "diff.loading": "Cargando la version anterior...",
+  "project.switch": "Cambiar de proyecto"
 }

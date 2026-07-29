@@ -1,5 +1,8 @@
 // Kanban types
 
+import type { Project } from './projects'
+export type { Project }
+
 export type Priority = 'critical' | 'high' | 'medium' | 'low'
 export type FeatureStatus = 'backlog' | 'todo' | 'in-progress' | 'review' | 'done'
 
@@ -112,7 +115,7 @@ export function epicLaneId(epic: string | null | undefined): string {
 }
 
 export type ExtensionMessage =
-  | { type: 'init'; features: Feature[]; columns: KanbanColumn[]; settings: CardDisplaySettings; collapsedColumns: string[]; boardViewMode: BoardViewMode; collapsedEpics: string[]; locale: string; translations: Record<string, string>; clarifications: Record<string, CardClarifications> }
+  | { type: 'init'; features: Feature[]; columns: KanbanColumn[]; settings: CardDisplaySettings; collapsedColumns: string[]; boardViewMode: BoardViewMode; collapsedEpics: string[]; locale: string; translations: Record<string, string>; clarifications: Record<string, CardClarifications>; projects: Project[]; activeProjectPath: string | null }
   | { type: 'featuresUpdated'; features: Feature[] }
   | { type: 'triggerCreateDialog' }
   | { type: 'featureContent'; featureId: string; content: string; frontmatter: FeatureFrontmatter }
@@ -156,6 +159,7 @@ export type WebviewMessage =
   | { type: 'dismissClarification'; featureId: string; clarificationId: string }
   | { type: 'openClarificationDiff'; featureId: string; clarificationId: string }
   | { type: 'requestSnapshot'; featureId: string; clarificationId: string }
+  | { type: 'selectProject'; projectPath: string }
 
 /**
  * A question asked about one passage of a card, and what came of it.

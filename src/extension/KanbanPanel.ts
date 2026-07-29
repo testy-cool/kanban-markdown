@@ -8,6 +8,7 @@ import { ensureStatusSubfolders, moveFeatureFile, getFeatureFilePath, getStatusF
 import { buildAgentInstructions, GENERATED_MARKER } from './agentInstructions'
 import { clarificationsFileName, parseClarifications, serializeClarifications, newClarification } from '../shared/clarifications'
 import type { CardClarifications } from '../shared/types'
+import { listProjects, getActiveProject, getActiveBoardDir, setActiveProject } from './workspaceProjects'
 import { parseFeatureFile, serializeFeature } from '../shared/featureFrontmatter'
 import { featureMatchesEpicLane } from '../shared/epicLane'
 import { t, getBundle, getEffectiveLocale, reloadBundle, getAllDefaultColumnNames, getDefaultColumnNamesForLocale } from './l10n'
@@ -106,6 +107,7 @@ export class KanbanPanel {
       async (message) => {
         switch (message.type) {
           case 'ready': {
+            this._updatePanelTitle()
             await this._loadFeatures()
             this._sendFeaturesToWebview()
             // Done once the board is up rather than on every reload, so a file
@@ -216,6 +218,9 @@ export class KanbanPanel {
           case 'requestSnapshot':
             await this._sendSnapshot(message.featureId, message.clarificationId)
             break
+          case 'selectProject':
+            await this._selectProject(message.projectPath)
+            break
           case 'deleteLabel':
             await this._deleteLabel(message.labelName)
             break
@@ -230,6 +235,14 @@ export class KanbanPanel {
 
     // Set up file watcher for feature files
     this._setupFileWatcher()
+
+    // Adding or removing a folder changes what the picker can offer, and
+    // removing the one on show has to fall back to another rather than leave
+    // the board pointed at a folder that is no longer open.
+    vscode.workspace.onDidChangeWorkspaceFolders(() => {
+      const active = getActiveProject(this._context.workspaceState)
+      if (active) void this._selectProject(active.path)
+    }, null, this._disposables)
 
     // Listen for settings changes and push updates to webview
     vscode.workspace.onDidChangeConfiguration(e => {
@@ -361,13 +374,35 @@ export class KanbanPanel {
   }
 
   private _getWorkspaceFeaturesDir(): string | null {
-    const workspaceFolders = vscode.workspace.workspaceFolders
-    if (!workspaceFolders || workspaceFolders.length === 0) {
-      return null
-    }
-    const config = vscode.workspace.getConfiguration('kanbanmd')
-    const featuresDirectory = config.get<string>('featuresDirectory') || '.devtool/features'
-    return path.join(workspaceFolders[0].uri.fsPath, featuresDirectory)
+    return getActiveBoardDir(this._context.workspaceState)
+  }
+
+  /**
+   * Points the board at another project in the same workspace.
+   *
+   * Both watchers are torn down and rebuilt, because each one is bound to a
+   * single directory, and a stale watcher would redraw the new board whenever
+   * the old project changed.
+   */
+  private async _selectProject(projectPath: string): Promise<void> {
+    if (!listProjects().some(p => p.path === projectPath)) return
+    await setActiveProject(this._context.workspaceState, projectPath)
+
+    const dir = await this._ensureFeaturesDir()
+    await this._loadFeatures()
+    this._setupFileWatcher()
+    this._setupClarifyWatcher()
+    await this._sendClarifications()
+    this._updatePanelTitle()
+    this._sendFeaturesToWebview()
+    if (dir) await this._writeAgentInstructions(dir)
+  }
+
+  /** Puts the project name in the tab, so two boards open at once stay apart. */
+  private _updatePanelTitle(): void {
+    const projects = listProjects()
+    const active = getActiveProject(this._context.workspaceState)
+    this._panel.title = projects.length > 1 && active ? `${t('panel.title')}: ${active.name}` : t('panel.title')
   }
 
   private async _ensureFeaturesDir(): Promise<string | null> {
@@ -1402,7 +1437,9 @@ export class KanbanPanel {
       collapsedEpics,
       locale: getEffectiveLocale(),
       translations: getBundle(),
-      clarifications: this._clarifications
+      clarifications: this._clarifications,
+      projects: listProjects(),
+      activeProjectPath: getActiveProject(this._context.workspaceState)?.path ?? null
     })
   }
 }
