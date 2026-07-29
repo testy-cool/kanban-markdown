@@ -48,9 +48,21 @@ export class KanbanPanel {
       ? vscode.window.activeTextEditor.viewColumn
       : undefined
 
-    // If we already have a panel, show it
+    // If we already have a panel, show it.
+    //
+    // A panel that was dragged into a separate editor window is restored into
+    // that window even when it is closed, and reveal has nowhere to put it, so
+    // the command appears to do nothing at all. There is no way to ask where a
+    // panel lives, so we ask reveal to work and check whether it did. If it did
+    // not, the panel is unreachable and is replaced by one in this window.
     if (KanbanPanel.currentPanel) {
-      KanbanPanel.currentPanel._panel.reveal(column)
+      const existing = KanbanPanel.currentPanel
+      existing._panel.reveal(column)
+      setTimeout(() => {
+        if (KanbanPanel.currentPanel !== existing || existing._panel.visible) return
+        existing.dispose()
+        KanbanPanel.createOrShow(extensionUri, context)
+      }, 400)
       return
     }
 
